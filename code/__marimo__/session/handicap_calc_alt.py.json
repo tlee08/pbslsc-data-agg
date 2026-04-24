@@ -1,0 +1,159 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.20.2"
+  },
+  "cells": [
+    {
+      "id": "MJUe",
+      "code_hash": "0e557c4fe1baf498d1d638fb4e0ced69",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"data-processing\">Data Processing</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "15bbb898ce12475c378d9a9e847a3845",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"load-members-results-and-prev-handicap-data\">Load members, results, and prev handicap data</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "e80834cdd61eacdd8123b7a44d92d377",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"editing-handicaps-manual\">Editing Handicaps (manual)</h2>\n<ul>\n<li>\n<span class=\"paragraph\">Set really large handicaps (outliers) to the largest reasonable (~55 mark). (<code>hcaps_251228_edited1.json</code>)</span>\n<ul>\n<li>\n<span class=\"paragraph\">Swim M:</span>\n<ul>\n<li>Ben Neighbour (85 -&gt; 55)</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Swim F:</span>\n<ul>\n<li>Milla Black (95 -&gt; 55)</li>\n<li>Lucy Warren (65 -&gt; 55)</li>\n</ul>\n</li>\n<li>Board M:</li>\n<li>\n<span class=\"paragraph\">Board F:</span>\n<ul>\n<li>Annabelle Chapman (70 -&gt; 55)</li>\n<li>Megan Rumford (75 -&gt; 55)</li>\n<li>Fiona Rae (85 -&gt; 55)</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Ski M:</span>\n<ul>\n<li>Ben Neighbour (100 -&gt; 60)</li>\n<li>Lachie Love (165 -&gt; 65)</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Ski F:</span>\n<ul>\n<li>Megan Rumford (125 -&gt; 65)</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Run M:</span>\n<ul>\n<li>Jock Edwards (60 -&gt; 50)</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Run F:</span>\n<ul>\n<li>Annabelle Burns (65 -&gt; 55)</li>\n<li>Amy van Dongen (65 -&gt; 55)</li>\n<li>Lucy Warren (85 -&gt; 55)</li>\n</ul>\n</li>\n</ul>\n</li>\n<li>Shift all handicaps down by 10 seconds (so anyone with a handicap &lt;= 10s starts on scratch again). (<code>hcaps_251228_edited2.json</code>)\n*</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "012903bbdaebd8d7b543282c8d1e6603",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"managing-handicaps-going-forward\">Managing Handicaps going forward</h2>\n<span class=\"paragraph\"><strong>Option 1:</strong>\nOPTION 1 \u2014 Rolling Placings Adjustment (Very Simple, Very Robust)</span>\n<ul>\n<li>Each week, adjust handicaps based on how far someone finished from the \u201ctarget placing\u201d, e.g. 5th.</li>\n<li><marimo-tex class=\"arithmatex\">||(\\Delta handicap = (actual\\_placing - target\\_placing) \\times step\\_size||)</marimo-tex></li>\n<li>Step size can be 2 or 5 second increments.</li>\n<li>Can clamp adjustments (e.g max 10 seconds per week to avoid huge swings)</li>\n<li><strong>NOTE:</strong> this is different from what we've done because we have a target <em>range</em> of places (5-10), rather than a target <em>single</em> place (5).</li>\n<li>\n<span class=\"paragraph\">Pros</span>\n<ul>\n<li>Extremely simple</li>\n<li>Easy to explain</li>\n<li>Self-correcting</li>\n<li>Works well with irregular attendance</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Cons</span>\n<ul>\n<li>Doesn't consider field strength on the day</li>\n<li>Top athletes in weak fields may still dominate temporarily</li>\n</ul>\n</li>\n</ul>\n<span class=\"paragraph\"><strong>Option 2:</strong>\nPercentile-Based Adjustment (More Fair with Variable Field Sizes)</span>\n<ul>\n<li>Use a target percentile (e.g. 0.66 is top third) rather than target placing.</li>\n<li>Improves Option 1 by normalizing for heat size.</li>\n<li><marimo-tex class=\"arithmatex\">||(\\delta handicap = (percentile - target_percentile) \\times K||)</marimo-tex></li>\n<li>K is a tuning constant (e.g. 10 seconds).</li>\n<li>\n<span class=\"paragraph\">Pros</span>\n<ul>\n<li>Accounts for different heat sizes</li>\n<li>Still simple</li>\n<li>More statistically fair</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Cons</span>\n<ul>\n<li>Slightly harder to explain</li>\n<li>Still Doesn't consider field strength on the day</li>\n</ul>\n</li>\n</ul>\n<span class=\"paragraph\"><strong>Option 3:</strong>\n\u201cTop-5 Frequency\u201d Control System</span>\n<ul>\n<li>Each athlete should finish top-5 about X% of the time (say 50%) in <em>their</em> last <marimo-tex class=\"arithmatex\">||(M||)</marimo-tex> races (track races for each athlete individually).</li>\n<li>\n<span class=\"paragraph\">Example:</span>\n<ul>\n<li>More the 60% of last <marimo-tex class=\"arithmatex\">||(M||)</marimo-tex> races in top 5, then increase handicap</li>\n<li>Within 30%-60% of last <marimo-tex class=\"arithmatex\">||(M||)</marimo-tex> races in top 5, then don't change handicap</li>\n<li>Below 30%, then decrease handicap</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Works well because:</span>\n<ul>\n<li>Strong athletes still get wins</li>\n<li>But domination is automatically corrected</li>\n<li>Poor performance with large handicap gets fixed</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Pros</span>\n<ul>\n<li>Matches your fairness goals exactly</li>\n<li>Resistant to random bad weeks</li>\n<li>Attendance-friendly (looks at each athlete's last <marimo-tex class=\"arithmatex\">||(M||)</marimo-tex> races)</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Cons</span>\n<ul>\n<li>Slower to react</li>\n</ul>\n</li>\n</ul>\n<span class=\"paragraph\"><strong>Option 4:</strong>\nSeparate \"Fast Group\" with smaller second steps</span>\n<ul>\n<li>\n<span class=\"paragraph\">Above a certain ability level:</span>\n<ul>\n<li>Handicaps increase more slowly</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Example:</span>\n<ul>\n<li>Normal athletes: \u00b15 seconds per step</li>\n<li>Top 10% athletes: \u00b12 seconds per step</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Rationale:</span>\n<ul>\n<li>Keeps elite athletes competitive</li>\n<li>Prevents runaway handicaps</li>\n<li>Encourages continued participation</li>\n</ul>\n</li>\n</ul>\n<span class=\"paragraph\"><strong>Option 5:</strong>\nHybrid Formulaic and Judgment approach</span>\n<ul>\n<li>Use Option 1 or 2 (Rolling placing adjustements) then periodically review manually (every month)</li>\n<li>\n<span class=\"paragraph\">During review:</span>\n<ul>\n<li>\n<span class=\"paragraph\">Identify athletes who:</span>\n<ul>\n<li>Have a large handicap</li>\n<li>Are never top-5</li>\n</ul>\n</li>\n<li>Reduce handicap manually (even if math says otherwise)</li>\n<li>\n<span class=\"paragraph\">Also:</span>\n<ul>\n<li>Cap handicaps within reasonable min/max bounds</li>\n<li>Apply \u201cgut checks\u201d for obvious outliers</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Rules of thumb</span>\n<ul>\n<li>Never change a handicap by more than ~10-15% at once</li>\n<li>Prefer many small nudges over big jumps</li>\n<li>Transparency matters more than precision</li>\n</ul>\n</li>\n</ul>\n</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "504928ebd278e3c836b0041e9acdd428",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"recommendation\">Recommendation</h2>\n<ul>\n<li>\n<span class=\"paragraph\">Weekly adjustment</span>\n<ul>\n<li>Use Percentile-based (Option 2) with small step sizes</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Monthly review</span>\n<ul>\n<li>Apply Option 3 logic for obvious unfairness</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Hard limits</span>\n<ul>\n<li>Min/max handicaps per event</li>\n</ul>\n</li>\n<li>\n<span class=\"paragraph\">Human override</span>\n<ul>\n<li>If someone has a big handicap and is still bottom-half -&gt; reduce it</li>\n</ul>\n</li>\n</ul>\n<span class=\"paragraph\">This balances:</span>\n<ul>\n<li>Fairness</li>\n<li>Simplicity</li>\n<li>Transparency</li>\n<li>Fun</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "90ee6d685ec007c89ed2b4b074953281",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"making-handicaps\">Making Handicaps</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "12c91381193f78d0fa72d8d07d834021",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"export-handicaps\">Export Handicaps</h2>\n<span class=\"paragraph\">JSON and CSV files</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hbol",
+      "code_hash": "b1dae4323f2e20e14558c8fc289fe271",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "0e769d3f93b73218fa3424cdac692a59",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "cc22d314f95cb1bf1c84b8eed4eaf09e",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "c43454f9603df568defcb9ff35afaa83",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "0f2986b5c39a5c42a58c06b29f078daa",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "8014b9d9e179c5ec7e8af5d39f82a5ee",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "e1bc6339987b8b5ef29ea36b8bee1730",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "9333b55b867acd86aa481b5db89fa03f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "be2ada51ce6f506113695f3faf120ef5",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "406aaa3abb757f27039b337ecbe81841",
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

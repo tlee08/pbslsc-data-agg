@@ -1,0 +1,164 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.20.2"
+  },
+  "cells": [
+    {
+      "id": "vblA",
+      "code_hash": "14b76d28a701920537f90068f7548df5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"checking-member-duplicates-inside-members-list\">Checking member duplicates inside members list</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "7b65e615dd9499fbc5a10e30bdd82bf7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"checking-member-exists\">Checking member exists</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "cc16f9ca6ed97ceb3221a85128e5d63a",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"checking-genders\">Checking genders</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "2ac41453c68d11c08f2bc1f4771551cb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"checking-duplicates\">Checking duplicates</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "setup",
+      "code_hash": "d934c6c44a5d9d039f1145ba69791109",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hbol",
+      "code_hash": "639bf7392390cdeca99bf63dc887d505",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "7d4541aa006f25b2baaca3167a841946",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "fa41a02e0a925e39c5035859ebe9d1bb",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='bkHC-0' random-id='d3cbabe5-2561-ad72-8813-c3af7753a6f1'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;&#92;&quot;:477,&#92;&quot;name&#92;&quot;:&#92;&quot;Milson, Christina&#92;&quot;,&#92;&quot;dob&#92;&quot;:&#92;&quot;1956-11-23&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;f&#92;&quot;,&#92;&quot;club&#92;&quot;:&#92;&quot;Pacific Club&#92;&quot;,&#92;&quot;id&#92;&quot;:&#92;&quot;M363&#92;&quot;,&#92;&quot;first_name&#92;&quot;:&#92;&quot;Christina&#92;&quot;,&#92;&quot;last_name&#92;&quot;:&#92;&quot;Milson&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Christina MILSON - M363&#92;&quot;},{&#92;&quot;&#92;&quot;:1331,&#92;&quot;name&#92;&quot;:&#92;&quot;Mears, Laura&#92;&quot;,&#92;&quot;dob&#92;&quot;:&#92;&quot;1984-04-24&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;f&#92;&quot;,&#92;&quot;club&#92;&quot;:&#92;&quot;Pacific Club&#92;&quot;,&#92;&quot;id&#92;&quot;:&#92;&quot;M363&#92;&quot;,&#92;&quot;first_name&#92;&quot;:&#92;&quot;Laura&#92;&quot;,&#92;&quot;last_name&#92;&quot;:&#92;&quot;Mears&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Laura MEARS - M363&#92;&quot;},{&#92;&quot;&#92;&quot;:2043,&#92;&quot;name&#92;&quot;:&#92;&quot;Philip - SLSC ACCOUNT, Shona&#92;&quot;,&#92;&quot;dob&#92;&quot;:&#92;&quot;1969-09-26&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;f&#92;&quot;,&#92;&quot;club&#92;&quot;:&#92;&quot;Palm Beach Surf Lifesaving Club&#92;&quot;,&#92;&quot;id&#92;&quot;:&#92;&quot;P332&#92;&quot;,&#92;&quot;first_name&#92;&quot;:&#92;&quot;Shona&#92;&quot;,&#92;&quot;last_name&#92;&quot;:&#92;&quot;Philip - SLSC ACCOUNT&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Shona PHILIP - SLSC ACCOUNT - P332&#92;&quot;},{&#92;&quot;&#92;&quot;:2044,&#92;&quot;name&#92;&quot;:&#92;&quot;Philip - PC ACCOUNT, Shona Saint Clair&#92;&quot;,&#92;&quot;dob&#92;&quot;:&#92;&quot;1969-09-26&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;f&#92;&quot;,&#92;&quot;club&#92;&quot;:&#92;&quot;Pacific Club&#92;&quot;,&#92;&quot;id&#92;&quot;:&#92;&quot;P332&#92;&quot;,&#92;&quot;first_name&#92;&quot;:&#92;&quot;Shona Saint Clair&#92;&quot;,&#92;&quot;last_name&#92;&quot;:&#92;&quot;Philip - PC ACCOUNT&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Shona Saint Clair PHILIP - PC ACCOUNT - P332&#92;&quot;},{&#92;&quot;&#92;&quot;:29,&#92;&quot;name&#92;&quot;:&#92;&quot;Rzadkowski, Aleksander&#92;&quot;,&#92;&quot;dob&#92;&quot;:&#92;&quot;1982-12-22&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;m&#92;&quot;,&#92;&quot;club&#92;&quot;:&#92;&quot;Cabbage Tree&#92;&quot;,&#92;&quot;id&#92;&quot;:&#92;&quot;R019&#92;&quot;,&#92;&quot;first_name&#92;&quot;:&#92;&quot;Aleksander&#92;&quot;,&#92;&quot;last_name&#92;&quot;:&#92;&quot;Rzadkowski&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Aleksander RZADKOWSKI - R019&#92;&quot;},{&#92;&quot;&#92;&quot;:30,&#92;&quot;name&#92;&quot;:&#92;&quot;Rzadkowski - SLSC ACCOUNT, Aleksander&#92;&quot;,&#92;&quot;dob&#92;&quot;:&#92;&quot;1982-12-22&#92;&quot;,&#92;&quot;gender&#92;&quot;:&#92;&quot;m&#92;&quot;,&#92;&quot;club&#92;&quot;:&#92;&quot;Palm Beach Surf Lifesaving Club&#92;&quot;,&#92;&quot;id&#92;&quot;:&#92;&quot;R019&#92;&quot;,&#92;&quot;first_name&#92;&quot;:&#92;&quot;Aleksander&#92;&quot;,&#92;&quot;last_name&#92;&quot;:&#92;&quot;Rzadkowski - SLSC ACCOUNT&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Aleksander RZADKOWSKI - SLSC ACCOUNT - R019&#92;&quot;}]&quot;' data-total-rows='6' data-total-columns='8' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;dob&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;gender&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;club&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;first_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;last_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;title&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[[&quot;&quot;,[&quot;integer&quot;,&quot;int64&quot;]]]' data-has-stable-row-id='false' data-lazy='false' data-preload='false' data-download-file-name='&quot;df&quot;'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "890c7b0b4bd645ee35a581351c0fef24",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "d9ec69e9b88aa24d20ce69d67edd1682",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "b2c1c10a4f51f5b4e7086f9abfa891c3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": null,
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

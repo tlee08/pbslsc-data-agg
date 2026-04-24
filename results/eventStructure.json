@@ -1,0 +1,2510 @@
+{
+  "dates": [
+    {
+      "label": "WHC - 28 Sep 2025",
+      "value": "250928_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 05 Oct 2025",
+      "value": "251005_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 06 Oct 2025",
+      "value": "251006_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 12 Oct 2025",
+      "value": "251012_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 19 Oct 2025",
+      "value": "251019_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 26 Oct 2025",
+      "value": "251026_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC.Ext - 02 Nov 2025",
+      "value": "251102_WHCExt",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 09 Nov 2025",
+      "value": "251109_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "M.Run - 16 Nov 2025",
+      "value": "251116_MRun",
+      "events": [
+        {
+          "label": "Marathon Run",
+          "value": "mrun",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 23 Nov 2025",
+      "value": "251123_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "C.Champs - 30 Nov 2025",
+      "value": "251130_CChamps",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "cswim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board - Rescue",
+          "value": "cboard_rescue",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board - Mal",
+          "value": "cboard_mal",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski - Surf",
+          "value": "cski_surf",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski - Racing",
+          "value": "cski_racing",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run 90m",
+          "value": "crun_90",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "cflags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 07 Dec 2025",
+      "value": "251207_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 14 Dec 2025",
+      "value": "251214_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Xmax - 21 Dec 2025",
+      "value": "251221_Xmas",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Xmas - 26 Dec 2025",
+      "value": "251226_Xmas",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 28 Dec 2025",
+      "value": "251228_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 01 Jan 2026",
+      "value": "260101_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "M.Ski - 04 Jan 2026",
+      "value": "260104_MSki",
+      "events": [
+        {
+          "label": "Marathon Ski",
+          "value": "mski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 11 Jan 2026",
+      "value": "260111_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 26 Jan 2026",
+      "value": "260126_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 01 Feb 2026",
+      "value": "260201_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "C.Champs - 8 Feb 2026",
+      "value": "260208_CChamps",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "cswim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board - Rescue",
+          "value": "cboard_rescue",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board - Mal",
+          "value": "cboard_mal",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski - Surf",
+          "value": "cski_surf",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski - Racing",
+          "value": "cski_racing",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run 90m",
+          "value": "crun_90",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "cflags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 15 Feb 2026",
+      "value": "260215_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "C.Champs - 22 Feb 2026",
+      "value": "260222_CChamps",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "cswim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board - Rescue",
+          "value": "cboard_rescue",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board - Mal",
+          "value": "cboard_mal",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski - Surf",
+          "value": "cski_surf",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski - Racing",
+          "value": "cski_racing",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run 90m",
+          "value": "crun_90",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "cflags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 01 Mar 2026",
+      "value": "260301_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "M.Swim - 08 Mar 2026",
+      "value": "260308_MSwim",
+      "events": [
+        {
+          "label": "Marathon Swim",
+          "value": "mswim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "IMDL - 15 Mar 2026",
+      "value": "260315_IMDL",
+      "events": [
+        {
+          "label": "IMDL",
+          "value": "imdl",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC.Ext - 22 Mar 2026",
+      "value": "260322_WHCExt",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 29 Mar 2026",
+      "value": "260329_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 03 Apr 2026",
+      "value": "260403_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "JCC - 05 April 2026",
+      "value": "260405_JCC",
+      "events": [
+        {
+          "label": "Individual",
+          "value": "individual",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Team",
+          "value": "team",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Mixed",
+              "value": "mixed"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            },
+            {
+              "label": "Family",
+              "value": "family"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 06 Apr 2026",
+      "value": "260406_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 12 Apr 2026",
+      "value": "260412_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "M.Board - 19 Apr 2026",
+      "value": "260403_MBoard",
+      "events": [
+        {
+          "label": "Marathon Board",
+          "value": "mboard",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 25 Apr 2026",
+      "value": "260425_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "WHC - 26 Apr 2026",
+      "value": "260426_WHC",
+      "events": [
+        {
+          "label": "Swim",
+          "value": "swim",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Board",
+          "value": "board",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Ski",
+          "value": "ski",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Run",
+          "value": "run",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        },
+        {
+          "label": "Flags",
+          "value": "flags",
+          "genders": [
+            {
+              "label": "Male",
+              "value": "m"
+            },
+            {
+              "label": "Female",
+              "value": "f"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

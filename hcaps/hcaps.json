@@ -1,0 +1,1031 @@
+{
+  "swim": {
+    "m": [
+      {
+        "member_title": "Theodore HANDBURY - H616",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "James Alexander RILEY - R631",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Oliver DAVIES - D618",
+        "handicap": 9,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Phillip ALLMAN - A002",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Charlie GATES - G608",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Joshua CLAYTON - C611",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Jonathan COWPER - C604",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "John KENNY - K611",
+        "handicap": 12,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Ian ELSEGOOD - E014",
+        "handicap": 12,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Jasper DERWENT - D613",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Jacob HARRIS - H673",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Jeremy BLACK - B067",
+        "handicap": 20,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Robert CROSLING - C655",
+        "handicap": 25,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Sinclair BLACK - B044",
+        "handicap": 27,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Stephen FORD - F649",
+        "handicap": 30,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Jordan MARKS - M601",
+        "handicap": 30,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Dean NARLOCK - N601",
+        "handicap": 40,
+        "handicap_5s": 40
+      },
+      {
+        "member_title": "Casey BROWN - B622",
+        "handicap": 45,
+        "handicap_5s": 45
+      },
+      {
+        "member_title": "Lachlan LOVE - L040",
+        "handicap": 51,
+        "handicap_5s": 50
+      },
+      {
+        "member_title": "Hunter BLACK - B643",
+        "handicap": 56,
+        "handicap_5s": 55
+      },
+      {
+        "member_title": "Ben NEIGHBOUR - N009",
+        "handicap": 63,
+        "handicap_5s": 65
+      }
+    ],
+    "f": [
+      {
+        "member_title": "Stephanie DARLEY - D608",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Emma FINNERTY - F635",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Lucinda DUNLOP - D609",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Elizabeth ALLEN - A606",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "India BEALE - B618",
+        "handicap": 8,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Sarah Jane SHERLOCK - S330",
+        "handicap": 9,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Alice STEED - S602",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Isabella DONNELLEY - D602",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "F. Edwina BISHOP - B315",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Lola CAYZER - C615",
+        "handicap": 11,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Holly GARNER - G623",
+        "handicap": 12,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Hadley Catherine BLACK - B303",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Ashley MARKS - M609",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Anoushka CAYZER - C616",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Lilian HUNTLEY - H604",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Arquette MILIN-BYRNE - M604",
+        "handicap": 18,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Annabelle ASPINALL - A621",
+        "handicap": 18,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Diane VAN OOI - V315",
+        "handicap": 20,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Annabelle SCARLETT - S642",
+        "handicap": 22,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Mali DUNN - D601",
+        "handicap": 27,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Christine MCGOLDRICK - MC620",
+        "handicap": 28,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Larissa BUTLER - B651",
+        "handicap": 30,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Mackenzie ARGENT - A608",
+        "handicap": 33,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Victoria MATHEWS - M602",
+        "handicap": 33,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Lucy WARREN - W615",
+        "handicap": 39,
+        "handicap_5s": 40
+      },
+      {
+        "member_title": "Amy VAN DONGEN - V305",
+        "handicap": 45,
+        "handicap_5s": 45
+      },
+      {
+        "member_title": "Sophie DE SALIS - D026",
+        "handicap": 51,
+        "handicap_5s": 50
+      },
+      {
+        "member_title": "Fiona RAE - R306",
+        "handicap": 53,
+        "handicap_5s": 55
+      },
+      {
+        "member_title": "Milla BLACK - B602",
+        "handicap": 68,
+        "handicap_5s": 70
+      }
+    ]
+  },
+  "board": {
+    "m": [
+      {
+        "member_title": "Oliver DAVIES - D618",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Jock EDWARDS - E601",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Tyson LETTS - L620",
+        "handicap": 5,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Matthew ALLAN - A617",
+        "handicap": 5,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Joshua CLAYTON - C611",
+        "handicap": 5,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Peter CONSTABLE - C048",
+        "handicap": 6,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "John KENNY - K611",
+        "handicap": 6,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Phillip ALLMAN - A002",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Jake CARMODY - C630",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Alistair SHIELDS - S065",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Anthony KENNY - K630",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Theodore HANDBURY - H616",
+        "handicap": 12,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Jonathan COUSINS - C003",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Dean NARLOCK - N601",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Daniel JOHNSTON - J605",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Philip Raymond HOSKING - H022",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Lochlan DELANEY - D619",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Logan PHILIP - P023",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Charles DALE - D606",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Timothy GATES - G043",
+        "handicap": 17,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Mark HIGHFIELD - H052",
+        "handicap": 20,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Daniel BREDEN - B647",
+        "handicap": 20,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Jasper DERWENT - D613",
+        "handicap": 20,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Gordon LANG - L008",
+        "handicap": 22,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Casey BROWN - B622",
+        "handicap": 25,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Sinclair BLACK - B044",
+        "handicap": 27,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Ben NEIGHBOUR - N009",
+        "handicap": 42,
+        "handicap_5s": 40
+      },
+      {
+        "member_title": "Hunter BLACK - B643",
+        "handicap": 51,
+        "handicap_5s": 50
+      },
+      {
+        "member_title": "Lachlan LOVE - L040",
+        "handicap": 60,
+        "handicap_5s": 60
+      }
+    ],
+    "f": [
+      {
+        "member_title": "Jasmin ROBINSON - R620",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Sophie DE SALIS - D026",
+        "handicap": 7,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Lucy WARREN - W615",
+        "handicap": 8,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Holly GARNER - G623",
+        "handicap": 8,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Larissa BUTLER - B651",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Lilian HUNTLEY - H604",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Isabella DONNELLEY - D602",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Amy VAN DONGEN - V305",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Elizabeth ALLEN - A606",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Hadley Catherine BLACK - B303",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Greta RITCHARD - R607",
+        "handicap": 16,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Maggie HARPER - H614",
+        "handicap": 20,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Annabelle ASPINALL - A621",
+        "handicap": 23,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Annabelle BURNS - B089",
+        "handicap": 25,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Lola CAYZER - C615",
+        "handicap": 26,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Rosemary SHANNON - S340",
+        "handicap": 33,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Victoria MATHEWS - M602",
+        "handicap": 33,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Alessandra ALESSI - A609",
+        "handicap": 35,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Milla BLACK - B602",
+        "handicap": 43,
+        "handicap_5s": 45
+      },
+      {
+        "member_title": "Christine MCGOLDRICK - MC620",
+        "handicap": 45,
+        "handicap_5s": 45
+      },
+      {
+        "member_title": "Annabelle CHAPMAN - C339",
+        "handicap": 52,
+        "handicap_5s": 50
+      },
+      {
+        "member_title": "Megan RUMFORD - R611",
+        "handicap": 55,
+        "handicap_5s": 55
+      },
+      {
+        "member_title": "Fiona RAE - R306",
+        "handicap": 79,
+        "handicap_5s": 80
+      }
+    ]
+  },
+  "ski": {
+    "m": [
+      {
+        "member_title": "Edward KENNY - K613",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Tim MARKOVITCH - M020",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Peter CONSTABLE - C048",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Jordan MARKS - M601",
+        "handicap": 5,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "James Alexander RILEY - R631",
+        "handicap": 7,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "John KENNY - K611",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Mitchel FAULKNER - F613",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Timothy GATES - G043",
+        "handicap": 13,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Jeremy BLACK - B067",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Daniel JOHNSTON - J605",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Alistair SHIELDS - S065",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Mark HIGHFIELD - H052",
+        "handicap": 19,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Gordon LANG - L008",
+        "handicap": 22,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Dean NARLOCK - N601",
+        "handicap": 25,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Matthew ALLAN - A617",
+        "handicap": 30,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Hunter BLACK - B643",
+        "handicap": 34,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Logan PHILIP - P023",
+        "handicap": 35,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Ben NEIGHBOUR - N009",
+        "handicap": 48,
+        "handicap_5s": 50
+      },
+      {
+        "member_title": "Lachlan LOVE - L040",
+        "handicap": 59,
+        "handicap_5s": 60
+      }
+    ],
+    "f": [
+      {
+        "member_title": "Arquette MILIN-BYRNE - M604",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Greta RITCHARD - R607",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Annabelle ASPINALL - A621",
+        "handicap": 3,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Mackenzie ARGENT - A608",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Diane VAN OOI - V315",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Sarah Jane SHERLOCK - S330",
+        "handicap": 6,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Milla BLACK - B602",
+        "handicap": 14,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Jessica BURNS - B018",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Mali DUNN - D601",
+        "handicap": 16,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Alessandra ALESSI - A609",
+        "handicap": 25,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Sophie DE SALIS - D026",
+        "handicap": 27,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Annabelle CHAPMAN - C339",
+        "handicap": 28,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Stephanie DARLEY - D608",
+        "handicap": 30,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Rosemary SHANNON - S340",
+        "handicap": 30,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Lucy WARREN - W615",
+        "handicap": 32,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Brie NEIGHBOUR - N301",
+        "handicap": 32,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Christine MCGOLDRICK - MC620",
+        "handicap": 33,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Annabelle BURNS - B089",
+        "handicap": 35,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Victoria MATHEWS - M602",
+        "handicap": 40,
+        "handicap_5s": 40
+      },
+      {
+        "member_title": "Larissa BUTLER - B651",
+        "handicap": 45,
+        "handicap_5s": 45
+      },
+      {
+        "member_title": "Megan RUMFORD - R611",
+        "handicap": 50,
+        "handicap_5s": 50
+      },
+      {
+        "member_title": "Fiona RAE - R306",
+        "handicap": 65,
+        "handicap_5s": 65
+      }
+    ]
+  },
+  "run": {
+    "m": [
+      {
+        "member_title": "Cormac STEWART - S610",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "James Alexander RILEY - R631",
+        "handicap": 3,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Ben NEIGHBOUR - N009",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Max WILEMAN - W612",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "John MAINLAND - M603",
+        "handicap": 6,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Taighe WILSON - W631",
+        "handicap": 8,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Axel BAILEY - B601",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Oliver WHITE - W624",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Oliver GIBSON - G607",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Matthew ALLAN - A617",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Ian ELSEGOOD - E014",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Billy BARBER - B608",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Emre MEHMET - M606",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Jack PLUMMER - P607",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Daniel JOHNSTON - J605",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Charlie GATES - G608",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Phillip ALLMAN - A002",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Timothy GATES - G043",
+        "handicap": 16,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Francis CHOW - C608",
+        "handicap": 19,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Jayden YUI - Y602",
+        "handicap": 29,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "John KENNY - K611",
+        "handicap": 31,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Hunter BLACK - B643",
+        "handicap": 33,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Dean NARLOCK - N601",
+        "handicap": 35,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Casey BROWN - B622",
+        "handicap": 35,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Jock EDWARDS - E601",
+        "handicap": 38,
+        "handicap_5s": 40
+      },
+      {
+        "member_title": "Daniel BREDEN - B647",
+        "handicap": 40,
+        "handicap_5s": 40
+      }
+    ],
+    "f": [
+      {
+        "member_title": "Megan RUMFORD - R611",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Maggie HARPER - H614",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Diane VAN OOI - V315",
+        "handicap": 2,
+        "handicap_5s": 0
+      },
+      {
+        "member_title": "Christine MCGOLDRICK - MC620",
+        "handicap": 3,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Mali DUNN - D601",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Lucinda DUNLOP - D609",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Brooke ELLIOTT - E608",
+        "handicap": 4,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Ashley MARKS - M609",
+        "handicap": 5,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Larissa BUTLER - B651",
+        "handicap": 5,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Greta RITCHARD - R607",
+        "handicap": 5,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Olivia BRANSGROVE - B620",
+        "handicap": 6,
+        "handicap_5s": 5
+      },
+      {
+        "member_title": "Alexandra KERRAS - k624",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Eve GAHA - G619",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Grace TASSELL - T680",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Arquette MILIN-BYRNE - M604",
+        "handicap": 10,
+        "handicap_5s": 10
+      },
+      {
+        "member_title": "Milla BLACK - B602",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Jasmin ROBINSON - R620",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Jesse WILKINSON - W609",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Katherine HARMSEN - H606",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Anoushka CAYZER - C616",
+        "handicap": 15,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Briar CARTER - C643",
+        "handicap": 16,
+        "handicap_5s": 15
+      },
+      {
+        "member_title": "Annabelle ASPINALL - A621",
+        "handicap": 20,
+        "handicap_5s": 20
+      },
+      {
+        "member_title": "Fiona RAE - R306",
+        "handicap": 23,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Lucy WARREN - W615",
+        "handicap": 27,
+        "handicap_5s": 25
+      },
+      {
+        "member_title": "Mackenzie ARGENT - A608",
+        "handicap": 28,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Zara MCKENZIE - MC621",
+        "handicap": 30,
+        "handicap_5s": 30
+      },
+      {
+        "member_title": "Emma NEILSON - N608",
+        "handicap": 35,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Elizabeth ALLEN - A606",
+        "handicap": 36,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Lola CAYZER - C615",
+        "handicap": 37,
+        "handicap_5s": 35
+      },
+      {
+        "member_title": "Victoria MATHEWS - M602",
+        "handicap": 43,
+        "handicap_5s": 45
+      },
+      {
+        "member_title": "Annabelle BURNS - B089",
+        "handicap": 45,
+        "handicap_5s": 45
+      },
+      {
+        "member_title": "Amy VAN DONGEN - V305",
+        "handicap": 45,
+        "handicap_5s": 45
+      }
+    ]
+  }
+}
