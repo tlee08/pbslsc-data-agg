@@ -34,13 +34,15 @@ All scripts in `code/` are [marimo](https://marimo.io/) reactive notebooks (`.py
 
 ### Scripts
 
-| Script | Purpose | Reads | Writes |
+All notebooks use `mo.ui.file()` upload widgets — no hardcoded paths. Files that produce output use `mo.download()` so the user saves to wherever they want.
+
+| Script | Purpose | File uploads required | Downloads produced |
 |---|---|---|---|
-| `format_members.py` | Normalise raw member CSV into members JSON | `members/members_25.csv` | `members/members.json` |
-| `check_results_validity.py` | Validate a results JSON (member existence, genders, duplicates) | `results/whc_results_*.json`, `members/members.json` | (none) |
-| `handicap_calc.py` | Compute updated handicaps from latest WHC results | `results/whc_results_*.json`, `hcaps/history/hcaps_*.json`, `members/members.json` | `hcaps/*.csv`, `hcaps/hcaps.json` |
-| `points_calc.py` | Calculate season points (DB Hunter, WHC, club champs, fresher) | `results/whc_results_*.json`, `members/members.json`, `members/freshers.csv`, `results/bbb_freshers.csv`, `results/jcc_results.csv` | `points/*.csv`, `points/*.json` |
-| `board_use_count.py` | Count board/ski craft usage per member | `results/whc_results_*.json`, `members/members.json`, `members/freshers.csv` | `other/craft_attendance_*.{json,csv}` |
+| `format_members.py` | Normalise raw members CSV into members JSON | members CSV | `members.json` |
+| `check_results_validity.py` | Validate a results JSON (member existence, genders, duplicates) | results JSON, `members.json` | none (read-only) |
+| `handicap_calc.py` | Compute updated handicaps from latest WHC results | `eventStructure.json`, previous `hcaps.json`, results JSON | `hcaps.json` |
+| `points_calc.py` | Calculate season points (DB Hunter, WHC, club champs, fresher) | results JSON, `members.json`, `freshers.csv`, `bbb_freshers.csv`, `jcc_results.csv` | `pts.csv`, `pts_fr.csv`, `attendance.csv`, `attendance_ls.json`, `attendance_ls_fr.json`, `cchamps_nonzero_pts.csv` |
+| `board_use_count.py` | Count board/ski craft usage per member | (hardcoded paths — not yet updated) | `other/craft_attendance_*.{json,csv}` |
 
 ### Key Data Formats
 
@@ -69,6 +71,6 @@ Percentile-based adjustment: members finishing above the 67th percentile receive
 ### Typical Workflow
 
 1. After a new event: add a results JSON to `results/` following the existing format.
-2. Run `check_results_validity.py` to confirm member IDs/titles are correct.
-3. Run `handicap_calc.py` (updating `new_dates_for_hcap` and file paths at the top of the cell) to produce new handicap files.
-4. Run `points_calc.py` (updating the results file path) to regenerate season points.
+2. Open `check_results_validity.py` — upload the results JSON and `members.json`, check output.
+3. Open `handicap_calc.py` — upload `eventStructure.json`, previous `hcaps.json`, and the results JSON; select the new date(s); download the updated `hcaps.json`.
+4. Open `points_calc.py` — upload all five files; download updated points CSVs/JSONs.
