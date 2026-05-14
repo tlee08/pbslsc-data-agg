@@ -153,7 +153,7 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
 
     results = Results.validate_json(results_file.value[0].contents)
     members = Members.validate_json(members_file.value[0].contents)
-    members_df = pd.DataFrame(members).set_index("title")
+    members_df = pd.DataFrame(Members.dump_python(members)).set_index("title")
     fr_raw_df = pd.read_csv(io.StringIO(freshers_file.value[0].contents.decode()))
     fr_df = members_df[members_df["id"].isin(fr_raw_df["id"])]
     bbb_fr_attendance = pd.read_csv(
@@ -217,7 +217,7 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
                     for _date in results
                     for _event in results[_date]
                 ],
-                name="event_identifier",
+                name="date_event",
             ),
         )
         .fillna(0)
@@ -232,7 +232,7 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
 
     # ── WHC + DB Hunter + Xmas cup points ────────────────────────────────────
     # Make initial df with members as rows, include gender, and all points tallies
-    pts_df = members_df[["id", "title", "gender"]].assign(
+    pts_df = members_df[["id", "gender"]].assign(
         all_attendance=0,
         dbhunter_pts=0,
         whc_pts=0,
@@ -273,7 +273,6 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
     # ── Club champs points ───────────────────────────────────────────────────
     # For each CChamps event,
     # take the best 2 placing for each member and sum their points.
-
     cchamps_cols = [
         _col
         for _col in attendance_df.columns
@@ -282,12 +281,13 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
     cchamps_pts_df = (
         attendance_df[cchamps_cols]
         .map(lambda _x: get_whc_pts(_x) if _x > 0 else 0)
-        .melt()
-        .assign(event=lambda df: df["col"].str.extract(r"__(.+)$"))
-        .query("pts > 0")
-        .groupby(["member", "event"])["pts"]
+        .melt(ignore_index=False)
+        .assign(event=lambda df: df["date_event"].str.extract(r"__(.+)$"))
+        .query("value > 0")
+        .groupby(["title", "date_event"])["value"]
         .apply(lambda _x: _x.nlargest(2).sum())
-        .pivot_table(fill_value=0)
+        .unstack()
+        .fillna(0)
     )
     cchamps_pts_df["cchamps"] = cchamps_pts_df.sum(axis=1)
 
@@ -303,10 +303,12 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
     pts_fr_df = pts_df.loc[fr_df.index].copy()
     pts_fr_df["fr_whc_pts"] = pts_fr_df["dbhunter_pts"]
 
+    pts_fr_df["fr_bbb_pts"] = 0
     bbb_members = pts_fr_df.index.intersection(bbb_fr_attendance.index)
     pts_fr_df.loc[bbb_members, "fr_bbb_pts"] = 5
     pts_fr_df.loc[bbb_members, "fr_whc_pts"] += 5
 
+    pts_fr_df["fr_jcc_pts"] = 0
     jcc_fr = jcc_results[jcc_results.index.isin(fr_df.index)]
     jcc_pts_by_member = jcc_fr["event"].map(get_jcc_pts)
     pts_fr_df.loc[jcc_pts_by_member.index, "fr_jcc_pts"] = jcc_pts_by_member
@@ -323,11 +325,11 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
     )
     attendance_ls_vect.name = "attendance_list"
 
-    attendance_ls_fr_df = attendance_ls_vect.loc[fr_df.index].copy()
+    attendance_ls_fr_vect = attendance_ls_vect.loc[fr_df.index].copy()
     for m in bbb_members:
-        attendance_ls_fr_df[m] += (("260103_bbb__bbb", 0),)
+        attendance_ls_fr_vect[m] += (("260103_bbb__bbb", 0),)
     for _, row in jcc_fr.iterrows():
-        attendance_ls_fr_df[row.name] += (
+        attendance_ls_fr_vect[row.name] += (
             (f"260405_JCC__{row['event']}", row["place"]),
         )
 
@@ -364,7 +366,7 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
                         label="attendance_ls.json",
                     ),
                     mo.download(
-                        data=to_json_bytes(attendance_ls_fr_df),
+                        data=to_json_bytes(attendance_ls_fr_vect),
                         filename="attendance_ls_fr.json",
                         label="attendance_ls_fr.json",
                     ),
