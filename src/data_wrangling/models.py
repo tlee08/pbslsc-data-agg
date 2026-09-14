@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.14"
+# dependencies = [
+#     "marimo>=0.23.6",
+# ]
+# ///
 from __future__ import annotations
 
 from typing import Literal

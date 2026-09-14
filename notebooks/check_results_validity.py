@@ -2,11 +2,15 @@
 # requires-python = ">=3.14"
 # dependencies = [
 #     "marimo>=0.23.6",
+#     "numpy==2.5.3",
+#     "pandas==3.0.5",
+#     "pydantic==2.13.5",
 # ]
 # ///
+
 import marimo
 
-__generated_with = "0.20.2"
+__generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
@@ -14,7 +18,7 @@ with app.setup:
 
     import marimo as mo
 
-    from core.models import Members, Results
+    from data_wrangling.models import Members, Results
 
 
 @app.cell

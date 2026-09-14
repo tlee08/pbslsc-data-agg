@@ -2,12 +2,15 @@
 # requires-python = ">=3.14"
 # dependencies = [
 #     "marimo>=0.23.6",
+#     "numpy==2.5.3",
+#     "pandas==3.0.5",
+#     "pydantic==2.13.5",
 # ]
 # ///
 
 import marimo
 
-__generated_with = "0.20.2"
+__generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
@@ -18,7 +21,7 @@ with app.setup:
     import numpy as np
     import pandas as pd
 
-    from core.models import Members, Results
+    from data_wrangling.models import Members, Results
 
 
 @app.cell
@@ -65,12 +68,8 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
                     freshers_file.value[0].name if freshers_file.value else "",
                 ]
             ),
-            mo.hstack(
-                [bbb_file, bbb_file.value[0].name if bbb_file.value else ""]
-            ),
-            mo.hstack(
-                [jcc_file, jcc_file.value[0].name if jcc_file.value else ""]
-            ),
+            mo.hstack([bbb_file, bbb_file.value[0].name if bbb_file.value else ""]),
+            mo.hstack([jcc_file, jcc_file.value[0].name if jcc_file.value else ""]),
         ]
     )
     return
@@ -249,9 +248,7 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
             # All attendance record
             pts_df.loc[_entry, "all_attendance"] += get_dbhunter_pts(_event)
             if (
-                (
-                    _row.get(f"{_date}__swim", 0) > 0
-                )  # Entered swim on day (if swim)
+                (_row.get(f"{_date}__swim", 0) > 0)  # Entered swim on day (if swim)
                 or (_event in swim_not_required)  # Or swim not required
                 or _date == "260301_WHC"  # TODO: remove nxt sns no water events
             ):
@@ -274,9 +271,7 @@ def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
     # For each CChamps event,
     # take the best 2 placing for each member and sum their points.
     cchamps_cols = [
-        _col
-        for _col in attendance_df.columns
-        if _col.split("__")[1] in cchamps_events
+        _col for _col in attendance_df.columns if _col.split("__")[1] in cchamps_events
     ]
     cchamps_pts_df = (
         attendance_df[cchamps_cols]

@@ -2,11 +2,15 @@
 # requires-python = ">=3.14"
 # dependencies = [
 #     "marimo>=0.23.6",
+#     "numpy==2.5.3",
+#     "pandas==3.0.5",
+#     "pydantic==2.13.5",
 # ]
 # ///
+
 import marimo
 
-__generated_with = "0.20.2"
+__generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
@@ -16,7 +20,7 @@ with app.setup:
     import marimo as mo
     import pandas as pd
 
-    from core.models import Members, Results
+    from data_wrangling.models import Members, Results
 
 
 @app.cell(hide_code=True)
@@ -108,7 +112,9 @@ def _(members_df, results_data):
 def _(attendance_df):
     # Convert attendance to a list of events attended per member (and their places in each event)
     attendance_ls_vect = attendance_df.apply(
-        lambda _row: tuple((_idx, _val) for _idx, _val in _row.items() if _val > 0),
+        lambda _row: tuple(
+            (_idx, _val) for _idx, _val in _row.items() if _val > 0
+        ),
         axis=1,
     )
     attendance_ls_vect.name = "attendance_list"
@@ -131,7 +137,9 @@ def _(attendance_ls_vect):
 
     attendance_craft_ls_vect = attendance_ls_vect.apply(
         lambda _row: [
-            _i[0] for _i in _row if re.search("|".join(_craft_events_ls), _i[0])
+            _i[0]
+            for _i in _row
+            if re.search("|".join(_craft_events_ls), _i[0])
         ]
     )
 
@@ -197,8 +205,12 @@ def _(attendance_craft_ls_vect, members_df):
             # Extract event
             _date, _event = _date_event.split("__")
             # Getting all attendance points (same as DB Hunter but don't need WHC swim)
-            attendance_count_df.loc[_member, "board_usage"] += get_board_use(_event)
-            attendance_count_df.loc[_member, "ski_usage"] += get_ski_use(_event)
+            attendance_count_df.loc[_member, "board_usage"] += get_board_use(
+                _event
+            )
+            attendance_count_df.loc[_member, "ski_usage"] += get_ski_use(
+                _event
+            )
 
     attendance_count_df[attendance_count_df.sum(axis=1) > 0]
     return (attendance_count_df,)
@@ -217,8 +229,9 @@ def _(attendance_count_df, attendance_craft_ls_vect):
     attendance_craft_ls_vect.to_json(
         os.path.join("other", "craft_attendance_breakdown.json")
     )
-    attendance_count_df.to_csv(os.path.join("other", "craft_attendance_count.csv"))
-
+    attendance_count_df.to_csv(
+        os.path.join("other", "craft_attendance_count.csv")
+    )
     return
 
 
