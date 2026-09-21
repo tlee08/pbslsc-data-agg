@@ -1,9 +1,8 @@
 # /// script
-# requires-python = ">=3.14"
+# requires-python = ">=3.12,<3.14"
 # dependencies = [
 #     "marimo>=0.23.6",
-#     "numpy==2.5.3",
-#     "pandas==3.0.5",
+#     "polars==1.38.1",
 #     "pydantic==2.13.5",
 # ]
 # ///
@@ -14,13 +13,12 @@ __generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
-    import copy
     import json
 
     import marimo as mo
-    import numpy as np
-    import pandas as pd
+    import polars as pl
 
+    from data_wrangling.frames import members_to_frame
     from data_wrangling.models import Members, Results
 
     # Events and genders constants
@@ -62,21 +60,21 @@ def _(members_file, old_hcaps_file, results_file):
                 [
                     members_file,
                     members_file.value[0].name if members_file.value else "",
-                ]
+                ],
             ),
             mo.hstack(
                 [
                     old_hcaps_file,
                     old_hcaps_file.value[0].name if old_hcaps_file.value else "",
-                ]
+                ],
             ),
             mo.hstack(
                 [
                     results_file,
                     results_file.value[0].name if results_file.value else "",
-                ]
+                ],
             ),
-        ]
+        ],
     )
     return
 
@@ -105,44 +103,40 @@ def _(new_dates_select):
 
 
 @app.function
-def preview_hcaps(hcaps):
-    # Preview: combined summary of non-zero handicaps
-    preview_rows = []
-    for _event in events:
-        for _gender in genders:
-            for _, row in hcaps[_event][_gender].iterrows():
-                preview_rows.append(
-                    {
-                        "event": _event,
-                        "gender": _gender,
-                        "member": row.name,
-                        "handicap": row["handicap"],
-                        "handicap_5s": row["handicap_5s"],
-                    }
-                )
-    preview_df = pd.DataFrame(preview_rows)
-    return preview_df
+def postprocess_hcaps(hcaps):
+    """Filter to positive handicaps, sort, and add the rounded column."""
+    return (
+        hcaps.filter(pl.col("handicap") > 0)
+        .with_columns(
+            pl.col("handicap").cast(pl.Int64),
+            ((pl.col("handicap") / round_incr).round() * round_incr)
+            .cast(pl.Int64)
+            .alias("handicap_5s"),
+        )
+        .sort(["event", "gender", "handicap"])
+    )
 
 
 @app.function
-def postprocess_hcaps(hcaps):
-    hcaps = copy.deepcopy(hcaps)
-    # Post-process: filter zeros, sort, add rounded column
-    for _event in events:
-        for _gender in genders:
-            _df = hcaps[_event][_gender]
-            _df.query("handicap > 0", inplace=True)
-            _df.sort_values("handicap", inplace=True)
-            _df["handicap_5s"] = (
-                (_df["handicap"] / round_incr).round() * round_incr
-            ).astype(int)
-    return hcaps
+def preview_hcaps(hcaps):
+    """Project handicaps to the preview columns."""
+    return hcaps.select(
+        pl.col("event"),
+        pl.col("gender"),
+        pl.col("member_title").alias("member"),
+        pl.col("handicap"),
+        pl.col("handicap_5s"),
+    )
 
 
 @app.function
 def construct_hcap_csv_download_btn(hcaps, event, gender):
+    """Build a download button for one event/gender CSV."""
+    subset = hcaps.filter((pl.col("event") == event) & (pl.col("gender") == gender))
     return mo.download(
-        data=hcaps[event][gender].to_csv().encode(),
+        data=subset.select("member_title", "handicap", "handicap_5s")
+        .write_csv()
+        .encode(),
         filename=f"{event}_{gender}.csv",
         label=f"Download {event}_{gender}.csv",
     )
@@ -159,86 +153,107 @@ def _(members_file, new_dates_select, old_hcaps_file, results_data):
     members = Members.validate_json(members_file.value[0].contents)
     new_dates = new_dates_select.value
 
-    # Build handicap DataFrames from previous values
-    hcaps = {
+    members_df = members_to_frame(members)
+
+    # Base frame: one row per (event, member); gender comes from the member
+    base = members_df.join(pl.DataFrame({"event": events}), how="cross")
+
+    # Flatten previous handicaps into a long frame (accept "title" or "member_title")
+    old_records = [
+        {
+            "event": _event,
+            "gender": _gender,
+            "member_title": rec.get("member_title", rec.get("title")),
+            "handicap": rec.get("handicap", 0),
+        }
+        for _event in events
+        for _gender in genders
+        for rec in old_hcaps.get(_event, {}).get(_gender, [])
+    ]
+    if old_records:
+        old_df = pl.DataFrame(old_records).select(
+            "event", "member_title", "handicap",
+        )
+    else:
+        old_df = pl.DataFrame(
+            schema={"event": pl.Utf8, "member_title": pl.Utf8, "handicap": pl.Float64},
+        )
+
+    base = base.join(old_df, on=["event", "member_title"], how="left").with_columns(
+        pl.col("handicap").fill_null(0),
+    )
+
+    # Previous handicaps, for the preview
+    hcaps_prev = postprocess_hcaps(base)
+
+    # Apply handicap updates for each new date
+    hcaps = base
+    for _date in new_dates:
+        for _event in events:
+            for _gender in genders:
+                entries = results_data.get(_date, {}).get(_event, {}).get(_gender, [])
+                if not entries:
+                    continue
+                count_total = len(entries)
+                count_threshold = round(count_total * percentile_threshold)
+                balance_index = count_total - count_threshold
+                deltas = [
+                    min(hcap_incr * (balance_index - i), hcap_max_plus)
+                    for i in range(balance_index)
+                ] + [
+                    max(-hcap_incr * i, -hcap_max_minus)
+                    for i in range(count_threshold)
+                ]
+                delta_df = pl.DataFrame(
+                    {
+                        "event": [_event] * count_total,
+                        "gender": [_gender] * count_total,
+                        "member_title": [entry.title for entry in entries],
+                        "delta": deltas,
+                    },
+                )
+                hcaps = hcaps.join(
+                    delta_df, on=["event", "gender", "member_title"], how="left",
+                ).with_columns(
+                    (pl.col("handicap") + pl.col("delta").fill_null(0))
+                    .clip(lower_bound=0)
+                    .alias("handicap"),
+                ).drop("delta")
+
+    hcaps = postprocess_hcaps(hcaps)
+
+    # Build output JSON, keeping the existing {event: {gender: [records]}} shape
+    hcaps_json = {
         _event: {
-            _gender: pd.DataFrame(members)
-            .set_index("title")
-            .query(f"gender == '{_gender}'")
-            .merge(
-                right=pd.DataFrame(old_hcaps[_event][_gender]).set_index("member_title")
-                if "member_title" in pd.DataFrame(old_hcaps[_event][_gender])
-                else pd.DataFrame(columns=["handicap", "handicap_5s"]),
-                how="left",
-                left_index=True,
-                right_index=True,
+            _gender: json.loads(
+                hcaps.filter(
+                    (pl.col("event") == _event) & (pl.col("gender") == _gender),
+                )
+                .select(
+                    pl.col("member_title").alias("title"),
+                    pl.col("name"),
+                    pl.col("dob"),
+                    pl.col("gender"),
+                    pl.col("club"),
+                    pl.col("id"),
+                    pl.col("first_name"),
+                    pl.col("last_name"),
+                    pl.col("handicap"),
+                    pl.col("handicap_5s"),
+                )
+                .write_json(),
             )
             for _gender in genders
         }
         for _event in events
     }
-    for _event in events:
-        for _gender in genders:
-            hcaps[_event][_gender].update(
-                pd.DataFrame(old_hcaps[_event][_gender]).set_index("member_title")
-                if "member_title" in pd.DataFrame(old_hcaps[_event][_gender])
-                else None
-            )
 
-    # Saving previous handicaps to compare against new
-    hcaps_prev = copy.deepcopy(hcaps)
-    # Post-process: filter zeros, sort, add rounded column
-    hcaps_prev = postprocess_hcaps(hcaps_prev)
-
-    # Apply handicap updates for each new date
-    for _date in new_dates:
-        for _event in events:
-            for _gender in genders:
-                if _date not in results_data or _event not in results_data[_date]:
-                    continue
-                hcaps_df = hcaps[_event][_gender]
-                results_i = results_data[_date][_event][_gender]
-                count_total = len(results_i)
-                count_threshold = round(count_total * percentile_threshold)
-                balance_index = count_total - count_threshold
-                hcap_delta_plus = np.minimum(
-                    np.full(balance_index, hcap_max_plus),
-                    np.arange(hcap_incr * balance_index, 0, -hcap_incr),
-                )
-                hcap_delta_minus = np.maximum(
-                    np.full(count_threshold, -hcap_max_minus),
-                    np.arange(0, -hcap_incr * count_threshold, -hcap_incr),
-                )
-                hcap_delta = np.concat([hcap_delta_plus, hcap_delta_minus])
-                for member_i, hcap_delta_i in zip(results_i, hcap_delta):
-                    if member_i.title in hcaps_df.index:
-                        hcaps_df.loc[member_i.title, "handicap"] += hcap_delta_i
-                hcaps_df["handicap"] = hcaps_df["handicap"].clip(lower=0)
-
-    # Post-process: filter zeros, sort, add rounded column
-    hcaps = postprocess_hcaps(hcaps)
-
-    # Build output JSON
-    hcaps_json = {
-        event: {
-            gender: json.loads(
-                hcaps[event][gender].reset_index().to_json(orient="records")
-            )
-            for gender in genders
-        }
-        for event in events
-    }
-
-    # Output
     mo.vstack(
         [
-            # Old handicaps
             mo.md("### Old Handicaps"),
             preview_hcaps(hcaps_prev),
-            # New handicaps
             mo.md("### New Handicaps"),
             preview_hcaps(hcaps),
-            # Download
             mo.download(
                 data=json.dumps(hcaps_json, indent=2).encode(),
                 filename="hcaps.json",
@@ -249,17 +264,12 @@ def _(members_file, new_dates_select, old_hcaps_file, results_data):
                     [
                         construct_hcap_csv_download_btn(hcaps, _event, _gender)
                         for _event in events
-                    ]
+                    ],
                 )
                 for _gender in genders
             ],
-        ]
+        ],
     )
-    return
-
-
-@app.cell
-def _():
     return
 
 

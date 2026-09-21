@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.14"
+# requires-python = ">=3.12,<3.14"
 # dependencies = [
 #     "marimo>=0.23.6",
 # ]
@@ -12,6 +12,8 @@ from pydantic import BaseModel, TypeAdapter
 
 
 class Member(BaseModel):
+    """A club member."""
+
     name: str
     dob: str
     gender: Literal["m", "f"]
@@ -26,6 +28,8 @@ Members = TypeAdapter(list[Member])
 
 
 class ResultEntry(BaseModel):
+    """A competitor's placing in a single event."""
+
     id: str
     title: str
 

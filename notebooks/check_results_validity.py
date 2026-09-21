@@ -1,9 +1,8 @@
 # /// script
-# requires-python = ">=3.14"
+# requires-python = ">=3.12,<3.14"
 # dependencies = [
 #     "marimo>=0.23.6",
-#     "numpy==2.5.3",
-#     "pandas==3.0.5",
+#     "polars==1.38.1",
 #     "pydantic==2.13.5",
 # ]
 # ///
@@ -14,10 +13,10 @@ __generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
-    import re
-
     import marimo as mo
+    import polars as pl
 
+    from data_wrangling.frames import members_to_frame, results_to_frame
     from data_wrangling.models import Members, Results
 
 
@@ -48,71 +47,67 @@ def _(members_file, results_file):
 
     results = Results.validate_json(results_file.value[0].contents)
     members = Members.validate_json(members_file.value[0].contents)
-    members_by_title = {m.title: m for m in members}
-    members_by_id = {m.id: m for m in members}
+
+    results_df = results_to_frame(results)
+    members_df = members_to_frame(members)
+    member_titles = members_df["member_title"].to_list()
+    member_ids = members_df["id"].to_list()
 
     lines = []
+
     # Check member existence and ID/title consistency
     lines.append("=== Member existence ===")
-    existence_ok = True
-    for _date, _date_data in results.items():
-        for _event, _event_data in _date_data.items():
-            for _gender, _gender_data in _event_data.items():
-                for entry in _gender_data:
-                    title, mid = entry.title, entry.id
-                    # Check member title exists
-                    title_ok = title in members_by_title
-                    # Check member ID exists
-                    id_ok = mid in members_by_id
-                    # Check member ID matches title
-                    id_match = re.search(r".* - (.*)$", title)
-                    id_eq = id_match and id_match[1] == mid
-                    if not (title_ok and id_ok and id_eq):
-                        lines.append(
-                            f"  FAIL {_date} / {_event} / {_gender}: {title!r} id={mid!r}"
-                        )
-                        existence_ok = False
-    if existence_ok:
+    bad_existence = results_df.with_columns(
+        pl.col("member_title").is_in(member_titles).alias("title_ok"),
+        pl.col("member_id").is_in(member_ids).alias("id_ok"),
+        (
+            pl.col("member_title").str.split(" - ").list.get(-1)
+            == pl.col("member_id")
+        ).alias("id_eq"),
+    ).filter(~(pl.col("title_ok") & pl.col("id_ok") & pl.col("id_eq")))
+    lines.extend(
+        f"  FAIL {row['date']} / {row['event']} / {row['gender']}: "
+        f"{row['member_title']!r} id={row['member_id']!r}"
+        for row in bad_existence.iter_rows(named=True)
+    )
+    if bad_existence.height == 0:
         lines.append("  All OK")
 
     # Check gender correctness
     lines.append("\n=== Gender correctness ===")
-    gender_ok = True
-    for _date, _date_data in results.items():
-        for _event, _event_data in _date_data.items():
-            for _gender, _gender_data in _event_data.items():
-                for entry in _gender_data:
-                    member = members_by_title.get(entry.title)
-                    if member and member.gender != _gender:
-                        lines.append(
-                            f"  FAIL {_date} / {_event}: {entry.title!r} listed "
-                            f"under {_gender!r} but is {member.gender!r}"
-                        )
-                        gender_ok = False
-    if gender_ok:
+    bad_gender = (
+        results_df.join(
+            members_df.select(
+                pl.col("member_title"), pl.col("gender").alias("member_gender"),
+            ),
+            on="member_title",
+            how="inner",
+        ).filter(pl.col("member_gender") != pl.col("gender"))
+    )
+    lines.extend(
+        f"  FAIL {row['date']} / {row['event']}: {row['member_title']!r} listed "
+        f"under {row['gender']!r} but is {row['member_gender']!r}"
+        for row in bad_gender.iter_rows(named=True)
+    )
+    if bad_gender.height == 0:
         lines.append("  All OK")
 
     # Check duplicates
     lines.append("\n=== Duplicates ===")
-    dupl_ok = True
-    for _date, _date_data in results.items():
-        for _event, _event_data in _date_data.items():
-            for _gender, _gender_data in _event_data.items():
-                seen = {}
-                for entry in _gender_data:
-                    mid = entry.id
-                    seen[mid] = seen.get(mid, 0) + 1
-                for mid, count in seen.items():
-                    if count > 1:
-                        lines.append(
-                            f"  FAIL {_date} / {_event} / {_gender}: "
-                            f"id={mid!r} appears {count}x"
-                        )
-                        dupl_ok = False
-    if dupl_ok:
+    dupl = (
+        results_df.group_by(["date", "event", "gender", "member_id"])
+        .agg(pl.len().alias("count"))
+        .filter(pl.col("count") > 1)
+    )
+    lines.extend(
+        f"  FAIL {row['date']} / {row['event']} / {row['gender']}: "
+        f"id={row['member_id']!r} appears {row['count']}x"
+        for row in dupl.iter_rows(named=True)
+    )
+    if dupl.height == 0:
         lines.append("  All OK")
 
-    if existence_ok and gender_ok and dupl_ok:
+    if bad_existence.height == 0 and bad_gender.height == 0 and dupl.height == 0:
         lines.insert(0, "All checks passed.\n")
 
     mo.plain_text("\n".join(lines))

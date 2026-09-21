@@ -1,9 +1,8 @@
 # /// script
-# requires-python = ">=3.14"
+# requires-python = ">=3.12,<3.14"
 # dependencies = [
 #     "marimo>=0.23.6",
-#     "numpy==2.5.3",
-#     "pandas==3.0.5",
+#     "polars==1.38.1",
 #     "pydantic==2.13.5",
 # ]
 # ///
@@ -14,229 +13,119 @@ __generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
-    import os
-    import re
-
     import marimo as mo
-    import pandas as pd
+    import polars as pl
 
-    from data_wrangling.models import Members, Results
-
-
-@app.cell(hide_code=True)
-def _():
-    mo.md(r"""
-    # Points Calculation
-    """)
-    return
+    from data_wrangling.frames import results_to_frame
+    from data_wrangling.models import Results
 
 
 @app.cell(hide_code=True)
 def _():
     mo.md(r"""
-    ## Results DF List
+    # Board & Ski Usage
+
+    Counts how many board and ski events each member attended.
     """)
     return
 
 
 @app.cell
 def _():
-    genders = ["m", "f"]
+    results_file = mo.ui.file(label="Upload results JSON", filetypes=[".json"])
+    results_file
+    return (results_file,)
 
-    results_json_path = os.path.join("results", "whc_results_260329.json")
-    with open(results_json_path) as f:
-        results_data = Results.validate_json(f.read())
 
-    members_json_path = os.path.join("members", "members.json")
-    with open(members_json_path) as f:
-        members_list = Members.validate_json(f.read())
-    members_df = pd.DataFrame(members_list)
+@app.cell
+def _(results_file):
+    mo.stop(
+        not results_file.value,
+        mo.callout(mo.md("Upload a results JSON to continue."), kind="warn"),
+    )
 
-    fr_raw_df = pd.read_csv(os.path.join("members", "freshers.csv"))
-    fr_df = members_df[members_df["id"].isin(fr_raw_df["id"])]
-    return members_df, results_data
+    results_data = Results.validate_json(results_file.value[0].contents)
+    results_df = results_to_frame(results_data)
+
+    craft_events = ["board", "cboard_rescue", "mboard", "ski", "cski_surf", "mski"]
+    board_events = ["board", "cboard_rescue", "mboard"]
+    ski_events = ["ski", "cski_surf", "mski"]
+
+    craft_df = results_df.filter(pl.col("event").is_in(craft_events))
+
+    counts_df = (
+        craft_df.group_by("member_title")
+        .agg(
+            pl.col("event").is_in(board_events).sum().alias("board_usage"),
+            pl.col("event").is_in(ski_events).sum().alias("ski_usage"),
+        )
+        .filter((pl.col("board_usage") + pl.col("ski_usage")) > 0)
+        .sort("member_title")
+    )
+    return counts_df, craft_df
 
 
 @app.cell(hide_code=True)
 def _():
     mo.md(r"""
-    ## Getting participation
-
-    Represented as both:
-    * DataFrame of rows (members) and columns (date-event)
-    * Series of members and a list of their events participated in & placing
+    ## Craft attendance (long format)
     """)
     return
 
 
 @app.cell
-def _(members_df, results_data):
-    # dataframe of `member_title` x `list of events they did as "<date>__<event>"`
-    # Where each cell is the member's placing in the given event, or 0 (if event not entered)
-    attendance_df = (
-        pd.DataFrame(
-            index=members_df["title"],
-            columns=pd.Series(
+def _(craft_df):
+    craft_df.select("member_title", "date", "event", "gender", "place").sort(
+        "member_title",
+        "date",
+        "event",
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    mo.md(r"""
+    ## Craft attendance counts
+    """)
+    return
+
+
+@app.cell
+def _(counts_df):
+    counts_df
+    return
+
+
+@app.cell
+def _(counts_df, craft_df):
+    mo.vstack(
+        [
+            mo.md("### Downloads"),
+            mo.hstack(
                 [
-                    f"{_date}__{_event}"
-                    for _date in results_data
-                    for _event in results_data[_date]
+                    mo.download(
+                        data=craft_df.select(
+                            "member_title",
+                            "date",
+                            "event",
+                            "gender",
+                            "place",
+                        )
+                        .write_csv()
+                        .encode(),
+                        filename="craft_attendance.csv",
+                        label="craft_attendance.csv",
+                    ),
+                    mo.download(
+                        data=counts_df.write_csv().encode(),
+                        filename="craft_attendance_count.csv",
+                        label="craft_attendance_count.csv",
+                    ),
                 ],
-                name="event_identifier",
             ),
-        )
-        .fillna(0)
-        .astype(int)
+        ],
     )
-
-    # For each date
-    for _date in results_data:
-        # For each event on the day
-        for _event in results_data[_date]:
-            # For each gender
-            for _gender in results_data[_date][_event]:
-                # For each participant in the specific event, add to their list of participated events
-                for _place, _member in enumerate(
-                    results_data[_date][_event][_gender],
-                ):
-                    _place = _place + 1  # To make places 1-indexed
-                    _member = _member.title
-                    # Record presence
-                    attendance_df.loc[_member, f"{_date}__{_event}"] = _place
-
-    attendance_df
-    return (attendance_df,)
-
-
-@app.cell
-def _(attendance_df):
-    # Convert attendance to a list of events attended per member (and their places in each event)
-    attendance_ls_vect = attendance_df.apply(
-        lambda _row: tuple(
-            (_idx, _val) for _idx, _val in _row.items() if _val > 0
-        ),
-        axis=1,
-    )
-    attendance_ls_vect.name = "attendance_list"
-
-    # Show attendance for each person
-    # attendance_ls_vect[attendance_ls_vect.apply(lambda x: len(x) > 0)]
-    return (attendance_ls_vect,)
-
-
-@app.cell
-def _(attendance_ls_vect):
-    _craft_events_ls = [
-        "board",
-        "cboard_rescue",
-        "mboard",
-        "ski",
-        "cski_surf",
-        "mski",
-    ]
-
-    attendance_craft_ls_vect = attendance_ls_vect.apply(
-        lambda _row: [
-            _i[0]
-            for _i in _row
-            if re.search("|".join(_craft_events_ls), _i[0])
-        ]
-    )
-
-    attendance_craft_ls_vect[
-        attendance_craft_ls_vect.apply(lambda x: len(x) > 0)
-    ].reset_index()
-    return (attendance_craft_ls_vect,)
-
-
-@app.cell(hide_code=True)
-def _():
-    mo.md(r"""
-    ## Points Calculation
-
-    NOTE: for each WHC event, participant MUST have completed the swim to get any points.
-    Don't need swim for club champs.
-    Marathon event itself is enough (goes without saying).
-
-    * DB Hunter based on points mapping
-    * Fresher WHC points are DB Hunter points
-    * WHC points are ONLY for WHC and Xmas cup events (no club champs, no marathon)
-      * Points are 1st -> 10pts, 2nd -> 9pts, ...., 9 -> 2pts, 10th+ -> 1pt
-    * Club champs are:
-      * For each competitor's events, their best 2 performances are taken (i.e. most points)
-      * Then sum each competitor's points from their counted events
-    * BBB points are 5 for freshers only (no WHC pts)
-    """)
-    return
-
-
-@app.function
-def get_board_use(event: str) -> int:
-    if event in ["board", "cboard_rescue", "mboard"]:
-        return 1
-    return 0
-
-
-@app.function
-def get_ski_use(event: str) -> int:
-    if event in ["ski", "cski_surf", "mski"]:
-        return 1
-    return 0
-
-
-@app.cell
-def _(attendance_craft_ls_vect, members_df):
-    attendance_count_df = (
-        pd.DataFrame(
-            index=members_df["title"],
-            columns=pd.Series(
-                ["board_usage", "ski_usage"],
-                name="pts",
-            ),
-        )
-        .fillna(0)
-        .astype(int)
-    )
-
-    # Calculating pts
-    for _member, _attendance_ls in attendance_craft_ls_vect.items():
-        # For each event that the curr member attended
-        for _date_event in _attendance_ls:
-            # Extract event
-            _date, _event = _date_event.split("__")
-            # Getting all attendance points (same as DB Hunter but don't need WHC swim)
-            attendance_count_df.loc[_member, "board_usage"] += get_board_use(
-                _event
-            )
-            attendance_count_df.loc[_member, "ski_usage"] += get_ski_use(
-                _event
-            )
-
-    attendance_count_df[attendance_count_df.sum(axis=1) > 0]
-    return (attendance_count_df,)
-
-
-@app.cell(hide_code=True)
-def _():
-    mo.md(r"""
-    ### Saving Points Results
-    """)
-    return
-
-
-@app.cell
-def _(attendance_count_df, attendance_craft_ls_vect):
-    attendance_craft_ls_vect.to_json(
-        os.path.join("other", "craft_attendance_breakdown.json")
-    )
-    attendance_count_df.to_csv(
-        os.path.join("other", "craft_attendance_count.csv")
-    )
-    return
-
-
-@app.cell(hide_code=True)
-def _():
     return
 
 

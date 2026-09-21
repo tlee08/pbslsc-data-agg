@@ -3,7 +3,7 @@ name = "data-wrangling"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.12,<3.14"
 dependencies = [
     "marimo[lsp,recommended]>=0.24.2",
     "openpyxl>=3.1.5",
@@ -20,6 +20,14 @@ dev = ["ruff>=0.15.2"]
 [build-system]
 requires = ["uv_build>=0.12.13,<0.13.0"]
 build-backend = "uv_build"
+
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["PLR1711", "ANN001", "ANN201", "ANN202", "B018", "D100", "FBT003"]
+fixable = ["ALL"]
+unfixable = []
+
 
 [tool.marimo.runtime]
 pythonpath = ["src"]
