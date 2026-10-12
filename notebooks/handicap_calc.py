@@ -123,7 +123,7 @@ def preview_hcaps(hcaps):
     return hcaps.select(
         pl.col("event"),
         pl.col("gender"),
-        pl.col("member_title").alias("member"),
+        pl.col("title"),
         pl.col("handicap"),
         pl.col("handicap_5s"),
     )
@@ -134,9 +134,7 @@ def construct_hcap_csv_download_btn(hcaps, event, gender):
     """Build a download button for one event/gender CSV."""
     subset = hcaps.filter((pl.col("event") == event) & (pl.col("gender") == gender))
     return mo.download(
-        data=subset.select("member_title", "handicap", "handicap_5s")
-        .write_csv()
-        .encode(),
+        data=subset.select("title", "handicap", "handicap_5s").write_csv().encode(),
         filename=f"{event}_{gender}.csv",
         label=f"Download {event}_{gender}.csv",
     )
@@ -158,12 +156,12 @@ def _(members_file, new_dates_select, old_hcaps_file, results_data):
     # Base frame: one row per (event, member); gender comes from the member
     base = members_df.join(pl.DataFrame({"event": events}), how="cross")
 
-    # Flatten previous handicaps into a long frame (accept "title" or "member_title")
+    # Flatten previous handicaps into a long frame (accept "title" or "title")
     old_records = [
         {
             "event": _event,
             "gender": _gender,
-            "member_title": rec.get("member_title", rec.get("title")),
+            "title": rec.get("title", rec.get("title")),
             "handicap": rec.get("handicap", 0),
         }
         for _event in events
@@ -172,14 +170,16 @@ def _(members_file, new_dates_select, old_hcaps_file, results_data):
     ]
     if old_records:
         old_df = pl.DataFrame(old_records).select(
-            "event", "member_title", "handicap",
+            "event",
+            "title",
+            "handicap",
         )
     else:
         old_df = pl.DataFrame(
-            schema={"event": pl.Utf8, "member_title": pl.Utf8, "handicap": pl.Float64},
+            schema={"event": pl.Utf8, "title": pl.Utf8, "handicap": pl.Float64},
         )
 
-    base = base.join(old_df, on=["event", "member_title"], how="left").with_columns(
+    base = base.join(old_df, on=["event", "title"], how="left").with_columns(
         pl.col("handicap").fill_null(0),
     )
 
@@ -201,24 +201,29 @@ def _(members_file, new_dates_select, old_hcaps_file, results_data):
                     min(hcap_incr * (balance_index - i), hcap_max_plus)
                     for i in range(balance_index)
                 ] + [
-                    max(-hcap_incr * i, -hcap_max_minus)
-                    for i in range(count_threshold)
+                    max(-hcap_incr * i, -hcap_max_minus) for i in range(count_threshold)
                 ]
                 delta_df = pl.DataFrame(
                     {
                         "event": [_event] * count_total,
                         "gender": [_gender] * count_total,
-                        "member_title": [entry.title for entry in entries],
+                        "title": [entry.title for entry in entries],
                         "delta": deltas,
                     },
                 )
-                hcaps = hcaps.join(
-                    delta_df, on=["event", "gender", "member_title"], how="left",
-                ).with_columns(
-                    (pl.col("handicap") + pl.col("delta").fill_null(0))
-                    .clip(lower_bound=0)
-                    .alias("handicap"),
-                ).drop("delta")
+                hcaps = (
+                    hcaps.join(
+                        delta_df,
+                        on=["event", "gender", "title"],
+                        how="left",
+                    )
+                    .with_columns(
+                        (pl.col("handicap") + pl.col("delta").fill_null(0))
+                        .clip(lower_bound=0)
+                        .alias("handicap"),
+                    )
+                    .drop("delta")
+                )
 
     hcaps = postprocess_hcaps(hcaps)
 
@@ -230,7 +235,7 @@ def _(members_file, new_dates_select, old_hcaps_file, results_data):
                     (pl.col("event") == _event) & (pl.col("gender") == _gender),
                 )
                 .select(
-                    pl.col("member_title").alias("title"),
+                    pl.col("title"),
                     pl.col("name"),
                     pl.col("dob"),
                     pl.col("gender"),

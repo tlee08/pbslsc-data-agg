@@ -54,13 +54,13 @@ def _(results_file):
     craft_df = results_df.filter(pl.col("event").is_in(craft_events))
 
     counts_df = (
-        craft_df.group_by("member_title")
+        craft_df.group_by("title")
         .agg(
             pl.col("event").is_in(board_events).sum().alias("board_usage"),
             pl.col("event").is_in(ski_events).sum().alias("ski_usage"),
         )
         .filter((pl.col("board_usage") + pl.col("ski_usage")) > 0)
-        .sort("member_title")
+        .sort("title")
     )
     return counts_df, craft_df
 
@@ -75,8 +75,8 @@ def _():
 
 @app.cell
 def _(craft_df):
-    craft_df.select("member_title", "date", "event", "gender", "place").sort(
-        "member_title",
+    craft_df.select("title", "date", "event", "gender", "place").sort(
+        "title",
         "date",
         "event",
     )
@@ -106,7 +106,7 @@ def _(counts_df, craft_df):
                 [
                     mo.download(
                         data=craft_df.select(
-                            "member_title",
+                            "title",
                             "date",
                             "event",
                             "gender",

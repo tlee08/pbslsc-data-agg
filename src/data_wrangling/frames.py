@@ -2,7 +2,7 @@
 
 These functions convert the validated pydantic models into long-format
 DataFrames. The long format is the primary working representation: members are
-keyed by ``member_title``, and results are one row per placing.
+keyed by ``title``, and results are one row per placing.
 """
 
 from __future__ import annotations
@@ -16,13 +16,8 @@ if TYPE_CHECKING:
 
 
 def members_to_frame(members: list[Member]) -> pl.DataFrame:
-    """Convert validated members to a frame keyed by ``member_title``.
-
-    Columns are the Member fields with ``title`` renamed to ``member_title``.
-    """
-    return pl.DataFrame([m.model_dump() for m in members]).rename(
-        {"title": "member_title"},
-    )
+    """Convert validated members to a frame keyed by ``title``."""
+    return pl.DataFrame([m.model_dump() for m in members])
 
 
 def results_to_frame(results: dict) -> pl.DataFrame:
@@ -30,7 +25,7 @@ def results_to_frame(results: dict) -> pl.DataFrame:
 
     ``results`` is ``{date: {event: {gender: [ResultEntry, ...]}}}`` where the
     list order encodes placing. Returns one row per placing with columns:
-    ``date``, ``event``, ``gender``, ``place`` (1-indexed), ``member_title``,
+    ``date``, ``event``, ``gender``, ``place`` (1-indexed), ``title``,
     ``member_id``.
     """
     records = [
@@ -39,7 +34,7 @@ def results_to_frame(results: dict) -> pl.DataFrame:
             "event": event,
             "gender": gender,
             "place": place,
-            "member_title": entry.title,
+            "title": entry.title,
             "member_id": entry.id,
         }
         for date, events in results.items()
