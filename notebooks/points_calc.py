@@ -102,12 +102,6 @@ def _(members_file, results_file):
 
 
 @app.cell
-def _(members_df):
-    mo.ui.dataframe(members_df)
-    return
-
-
-@app.cell
 def _(bbb_file, freshers_file, jcc_file, members_df, results_df):
     mo.stop(
         not all([freshers_file.value, bbb_file.value, jcc_file.value]),
@@ -321,8 +315,14 @@ def _(bbb_file, freshers_file, jcc_file, members_df, results_df):
         )
         .sort("title", "date", "event")
     )
-
-    return attendance_fr_long, attendance_long, cchamps_long, fr_df, pts, pts_fr
+    return (
+        attendance_fr_long,
+        attendance_long,
+        cchamps_long,
+        fr_df,
+        pts,
+        pts_fr,
+    )
 
 
 @app.cell
@@ -372,6 +372,11 @@ def _(attendance_fr_long, attendance_long, cchamps_long, pts, pts_fr):
             ),
         ],
     )
+    return
+
+
+@app.cell
+def _():
     return
 
 

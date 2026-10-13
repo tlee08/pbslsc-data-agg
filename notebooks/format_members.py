@@ -12,12 +12,11 @@ __generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
-    import io
     import json
     from pathlib import Path
+
     import marimo as mo
     import polars as pl
-    import json
 
     from data_wrangling.models import Members, Results
 
@@ -52,7 +51,7 @@ def _():
     # )
 
     df = pl.read_csv(
-        Path.cwd().parent / "data" / "2026_27" / "20261008_PBSC_Members.csv"
+        Path.cwd().parent / "data" / "2026_27" / "20261008_PBSC_Members.csv",
     )
     df = df.rename(
         {
@@ -60,7 +59,7 @@ def _():
             "Gender identity": "gender",
             "Member Number": "id",
             "Status": "membership",
-        }
+        },
     )
 
     df = df.with_columns(
@@ -82,7 +81,8 @@ def _():
     ).sort("title")
 
     _json_bytes = Members.dump_json(
-        Members.validate_python(df.to_dicts()), indent=2
+        Members.validate_python(df.to_dicts()),
+        indent=2,
     )
     mo.vstack(
         [
@@ -106,7 +106,7 @@ def _(df):
         .filter(pl.col("count") >= 2)
         .sort("count", descending=True),
         df.select((pl.col("gender") == "").sum()),
-        df.group_by("title")
+        df.group_by("name")
         .agg(pl.count())
         .filter(pl.col("count") >= 2)
         .sort("count", descending=True),
@@ -117,7 +117,7 @@ def _(df):
 @app.cell(hide_code=True)
 def _():
     mo.md(r"""
-    ## Make `meetings.json`
+    ## Make empty `meetings.json`
     """)
     return
 
@@ -125,17 +125,16 @@ def _():
 @app.cell
 def _():
     meetings_dict = json.loads(
-        (Path.cwd().parent / "data" / "2026_27" / "meetings.json").read_text()
+        (Path.cwd().parent / "data" / "2026_27" / "meetings.json").read_text(),
     )
     lookups_dict = json.loads(
-        (Path.cwd().parent / "data" / "2026_27" / "lookups.json").read_text()
+        (Path.cwd().parent / "data" / "2026_27" / "lookups.json").read_text(),
     )
 
     results_dict = {
         _i["id"]: {
             _event: {
-                _gender: []
-                for _gender in lookups_dict["events"][_event]["genders"]
+                _gender: [] for _gender in lookups_dict["events"][_event]["genders"]
             }
             for _event in lookups_dict["series"][_i["series"]]["events"]
         }
@@ -143,7 +142,8 @@ def _():
     }
 
     _json_bytes = Results.dump_json(
-        Results.validate_python(results_dict), indent=2
+        Results.validate_python(results_dict),
+        indent=2,
     )
     mo.vstack(
         [

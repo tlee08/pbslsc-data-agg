@@ -25,8 +25,7 @@ def results_to_frame(results: dict) -> pl.DataFrame:
 
     ``results`` is ``{date: {event: {gender: [ResultEntry, ...]}}}`` where the
     list order encodes placing. Returns one row per placing with columns:
-    ``date``, ``event``, ``gender``, ``place`` (1-indexed), ``title``,
-    ``member_id``.
+    ``date``, ``event``, ``gender``, ``place`` (1-indexed), ``title``.
     """
     records = [
         {
@@ -34,8 +33,7 @@ def results_to_frame(results: dict) -> pl.DataFrame:
             "event": event,
             "gender": gender,
             "place": place,
-            "title": entry.title,
-            "member_id": entry.id,
+            "title": entry,
         }
         for date, events in results.items()
         for event, genders in events.items()

@@ -26,4 +26,4 @@ class Member(BaseModel):
 Members = TypeAdapter(list[Member])
 
 
-Results = TypeAdapter(dict[str, dict[str, dict[str, str]]])
+Results = TypeAdapter(dict[str, dict[str, dict[str, list[str]]]])
