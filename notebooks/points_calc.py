@@ -13,7 +13,8 @@ __generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
-    import io
+    import json
+    from pathlib import Path
 
     import marimo as mo
     import polars as pl
@@ -34,159 +35,63 @@ with app.setup:
 
 @app.cell
 def _():
-    mo.md("""
-    # Calculate Points
-
-    Upload all required files. Points are calculated automatically
-    once all files are provided.
-    Download individual output files below the preview.
-    """)
+    mo.md("""# Calculate Points""")
     return
 
 
 @app.cell
 def _():
-    results_file = mo.ui.file(label="Upload results JSON", filetypes=[".json"])
-    members_file = mo.ui.file(label="Upload members.json", filetypes=[".json"])
-    freshers_file = mo.ui.file(label="Upload freshers.csv", filetypes=[".csv"])
-    bbb_file = mo.ui.file(label="Upload bbb_freshers.csv", filetypes=[".csv"])
-    jcc_file = mo.ui.file(label="Upload jcc_results.csv", filetypes=[".csv"])
-    return bbb_file, freshers_file, jcc_file, members_file, results_file
+    data = Path.cwd().parent / "data" / "2026_27"
+    return (data,)
 
 
 @app.cell
-def _(bbb_file, freshers_file, jcc_file, members_file, results_file):
-    mo.vstack(
-        [
-            mo.hstack(
-                [
-                    results_file,
-                    results_file.value[0].name if results_file.value else "",
-                ],
-            ),
-            mo.hstack(
-                [
-                    members_file,
-                    members_file.value[0].name if members_file.value else "",
-                ],
-            ),
-            mo.hstack(
-                [
-                    freshers_file,
-                    freshers_file.value[0].name if freshers_file.value else "",
-                ],
-            ),
-            mo.hstack([bbb_file, bbb_file.value[0].name if bbb_file.value else ""]),
-            mo.hstack([jcc_file, jcc_file.value[0].name if jcc_file.value else ""]),
-        ],
-    )
-    return
-
-
-@app.cell
-def _(members_file, results_file):
-    mo.stop(
-        not results_file.value or not members_file.value,
-        mo.callout(
-            mo.md("Upload the results and members files to continue."),
-            kind="warn",
-        ),
-    )
-
-    results = Results.validate_json(results_file.value[0].contents)
-    members = Members.validate_json(members_file.value[0].contents)
+def _(data):
+    members = Members.validate_json((data / "members.json").read_text())
+    results = Results.validate_json((data / "results.json").read_text())
+    lookups = json.loads((data / "lookups.json").read_text())
 
     members_df = members_to_frame(members)
     results_df = results_to_frame(results)
-    return members_df, results_df
+    return lookups, members_df, results_df
 
 
 @app.cell
-def _(bbb_file, freshers_file, jcc_file, members_df, results_df):
-    mo.stop(
-        not all([freshers_file.value, bbb_file.value, jcc_file.value]),
-        mo.callout(
-            mo.md("Upload the freshers, BBB, and JCC files to continue."),
-            kind="warn",
-        ),
-    )
+def _(lookups, members_df, results_df):
+    # ── Points config — edit values here ────────────────────────────────
+    whc_first = 11  # points for 1st place, −1 per place (min 1)
+    attendance = {"normal": 1, "marathon": 5}  # attendance points per event kind
+    jcc_points = {"jcc_individual": 25, "jcc_team": 5}
+    curlewis_dates = ["260927_whc", "261004_whc"]
+    # TODO: freshers/bbb — members.json will soon carry membership="Fresher";
+    # bbb attendance (5 pts) still needs an external file, not wired yet.
 
-    fr_raw = pl.read_csv(
-        io.BytesIO(freshers_file.value[0].contents),
-        infer_schema=False,
-    )
-    bbb_attendance = pl.read_csv(
-        io.BytesIO(bbb_file.value[0].contents),
-        infer_schema=False,
-    )
-    jcc_results = pl.read_csv(
-        io.BytesIO(jcc_file.value[0].contents),
-        infer_schema=False,
-    )
+    # Event categories (single source of truth: lookups.json)
+    s = lookups["series"]
+    whc_events = s["whc"]["events"]
+    cchamps_events = s["cchamps"]["events"]
+    marathon_events = [e for k in ("mswim", "mboard", "mski", "mrun") for e in s[k]["events"]]
+    jcc_events = s["jcc"]["events"]
+    imdl_events = s["imdl"]["events"]
+    swim_not_required = [*marathon_events, *cchamps_events, *imdl_events]
+    xmas_dates = [d for d in results_df["date"].unique() if "_xmas" in d]
 
-    fr_df = members_df.filter(pl.col("id").is_in(fr_raw["id"].to_list()))
-
-    # ── Config ──────────────────────────────────────────────────────────────
-    dbhunter_map = {
-        "swim": 1,
-        "board": 1,
-        "ski": 1,
-        "run": 1,
-        "flags": 1,
-        "mswim": 5,
-        "mboard": 5,
-        "mski": 5,
-        "mrun": 5,
-        "cswim": 1,
-        "cboard_rescue": 1,
-        "cboard_mal": 1,
-        "cski_surf": 1,
-        "cski_racing": 1,
-        "crun_90": 1,
-        "cflags": 1,
-        "imdl": 5,
+    attendance_map = {e: attendance["marathon"] for e in [*marathon_events, *imdl_events]} | {
+        e: attendance["normal"] for e in [*whc_events, *cchamps_events]
     }
-    whc_events = ["swim", "board", "ski", "run", "flags"]
-    marathon_events = ["mswim", "mboard", "mski", "mrun"]
-    swim_not_required = [
-        "mswim",
-        "mboard",
-        "mski",
-        "mrun",
-        "cswim",
-        "cboard_rescue",
-        "cboard_mal",
-        "cski_surf",
-        "cski_racing",
-        "crun_90",
-        "cflags",
-        "imdl",
-    ]
-    cchamps_events = [
-        "cswim",
-        "cboard_rescue",
-        "cboard_mal",
-        "cski_surf",
-        "cski_racing",
-        "crun_90",
-        "cflags",
-    ]
-    xmas_dates = [_k for _k in results_df["date"].unique() if "_Xmas" in _k]
-    curlewis_dates = ["250928_WHC", "251005_WHC"]
 
-    # ── Points from results ─────────────────────────────────────────────────
+    fr_df = members_df.filter(pl.col("membership") == "Fresher")
+
+    # ── Points from results ─────────────────────────────────────────────
     results_enriched = (
         results_df.with_columns(
-            pl.col("event")
-            .replace_strict(dbhunter_map, default=0)
-            .alias("dbhunter_val"),
+            pl.col("event").replace_strict(attendance_map, default=0).alias("dbhunter_val"),
             pl.when(pl.col("place") > 0)
-            .then((11 - pl.col("place")).clip(lower_bound=1))
+            .then((whc_first - pl.col("place")).clip(lower_bound=1))
             .otherwise(0)
             .alias("whc_val"),
         )
         .join(
-            # Members who entered the swim on a given day
             results_df.filter(pl.col("event") == "swim")
             .select("title", "date")
             .unique()
@@ -197,11 +102,7 @@ def _(bbb_file, freshers_file, jcc_file, members_df, results_df):
         .with_columns(pl.col("swam").fill_null(False))
     )
 
-    eligible = (
-        pl.col("swam")
-        | pl.col("event").is_in(swim_not_required)
-        | (pl.col("date") == "260301_WHC")
-    )
+    eligible = pl.col("swam") | pl.col("event").is_in(swim_not_required)
 
     def _tally(cond, value_col="whc_val"):
         return pl.when(cond).then(pl.col(value_col)).otherwise(0).sum()
@@ -211,21 +112,14 @@ def _(bbb_file, freshers_file, jcc_file, members_df, results_df):
         _tally(eligible, "dbhunter_val").alias("dbhunter_pts"),
         _tally(eligible & pl.col("event").is_in(whc_events)).alias("whc_pts"),
         _tally(eligible & pl.col("date").is_in(xmas_dates)).alias("xmas_pts"),
-        _tally(
-            eligible & pl.col("event").is_in(marathon_events),
-        ).alias("presidents_pts"),
+        _tally(eligible & pl.col("event").is_in(marathon_events)).alias("presidents_pts"),
         _tally(eligible & pl.col("date").is_in(curlewis_dates)).alias("curlewis_pts"),
     )
 
-    # Club champs: for each event, take the member's best 2 performances across dates
     cchamps = (
-        results_enriched.filter(
-            pl.col("event").is_in(cchamps_events) & (pl.col("place") > 0),
-        )
+        results_enriched.filter(pl.col("event").is_in(cchamps_events) & (pl.col("place") > 0))
         .group_by("title", "event")
-        .agg(
-            pl.col("whc_val").sort(descending=True).head(2).sum().alias("cchamps_pts"),
-        )
+        .agg(pl.col("whc_val").sort(descending=True).head(2).sum().alias("cchamps_pts"))
         .group_by("title")
         .agg(pl.col("cchamps_pts").sum().alias("cchamps"))
     )
@@ -237,138 +131,68 @@ def _(bbb_file, freshers_file, jcc_file, members_df, results_df):
         .with_columns(pl.col(*tally_cols).fill_null(0))
     )
 
-    # ── Fresher points ──────────────────────────────────────────────────────
-    bbb_titles = bbb_attendance["title"].to_list()
-
+    # ── Fresher points ──────────────────────────────────────────────────
     jcc_pts = (
-        jcc_results.with_columns(
-            pl.when(pl.col("event").str.starts_with("individual_"))
-            .then(25)
-            .when(pl.col("event").str.starts_with("team_"))
-            .then(5)
-            .otherwise(0)
-            .alias("jcc_pts"),
-        )
+        results_enriched.filter(pl.col("event").is_in(jcc_events))
+        .with_columns(pl.col("event").replace_strict(jcc_points, default=0).alias("jcc_val"))
         .group_by("title")
-        .agg(pl.col("jcc_pts").sum().alias("fr_jcc_pts"))
+        .agg(pl.col("jcc_val").sum().alias("fr_jcc_pts"))
     )
 
     pts_fr = (
         pts.join(fr_df.select("title"), on="title", how="inner")
-        .with_columns(
-            pl.when(pl.col("title").is_in(bbb_titles))
-            .then(5)
-            .otherwise(0)
-            .alias("fr_bbb_pts"),
-        )
         .join(jcc_pts, on="title", how="left")
         .with_columns(
             pl.col("fr_jcc_pts").fill_null(0),
-            (
-                pl.col("dbhunter_pts") + pl.col("fr_bbb_pts") + pl.col("fr_jcc_pts")
-            ).alias("fr_whc_pts"),
+            (pl.col("dbhunter_pts") + pl.col("fr_jcc_pts")).alias("fr_whc_pts"),
         )
     )
 
-    # ── Attendance (long) ───────────────────────────────────────────────────
+    # ── Long-form outputs ───────────────────────────────────────────────
     attendance_long = (
         results_df.filter(pl.col("place") > 0)
         .select("title", "date", "event", "place")
         .sort("title", "date", "event")
     )
-
-    bbb_rows = pl.DataFrame(
-        {
-            "title": bbb_titles,
-            "date": ["260103_bbb"] * len(bbb_titles),
-            "event": ["bbb"] * len(bbb_titles),
-            "place": [0] * len(bbb_titles),
-        },
-    )
-    jcc_rows = jcc_results.select(
-        "title",
-        pl.lit("260405_JCC").alias("date"),
-        "event",
-        pl.col("place").cast(pl.Int64),
-    )
-    attendance_fr_long = pl.concat(
-        [
-            attendance_long.join(
-                fr_df.select("title"),
-                on="title",
-                how="inner",
-            ),
-            bbb_rows,
-            jcc_rows,
-        ],
-    ).sort("title", "date", "event")
-
+    attendance_fr_long = attendance_long.join(fr_df.select("title"), on="title", how="inner")
     cchamps_long = (
-        results_enriched.filter(
-            pl.col("event").is_in(cchamps_events) & (pl.col("place") > 0),
-        )
-        .select(
-            "title",
-            "date",
-            "event",
-            pl.col("whc_val").alias("points"),
-        )
+        results_enriched.filter(pl.col("event").is_in(cchamps_events) & (pl.col("place") > 0))
+        .select("title", "date", "event", pl.col("whc_val").alias("points"))
         .sort("title", "date", "event")
     )
-    return (
-        attendance_fr_long,
-        attendance_long,
-        cchamps_long,
-        fr_df,
-        pts,
-        pts_fr,
-    )
+
+    return attendance_fr_long, attendance_long, cchamps_long, fr_df, pts, pts_fr
 
 
 @app.cell
-def _(fr_df):
-    mo.ui.dataframe(fr_df)
+def _(members_df, results_df):
+    unknown = sorted(set(results_df["title"].to_list()) - set(members_df["title"].to_list()))
+    mo.md(f"⚠️ Results entries with no matching member (dropped): {unknown or 'none'}")
     return
 
 
 @app.cell
-def _(attendance_fr_long, attendance_long, cchamps_long, pts, pts_fr):
+def _(attendance_fr_long, attendance_long, cchamps_long, data, pts, pts_fr):
     pts_nonzero = pts.filter(pl.sum_horizontal(pl.col(tally_cols)) > 0)
+
+    for name, df in [
+        ("pts.csv", pts),
+        ("pts_fr.csv", pts_fr),
+        ("attendance_long.csv", attendance_long),
+        ("attendance_fr_long.csv", attendance_fr_long),
+        ("cchamps.csv", cchamps_long),
+    ]:
+        df.write_csv(data / name)
 
     mo.vstack(
         [
-            mo.md("### All members points"),
+            mo.md("### All members (with points)"),
             pts_nonzero,
-            mo.md("### Fresher points"),
+            mo.md("### Freshers"),
             pts_fr,
-            mo.hstack(
-                [
-                    mo.download(
-                        data=pts.write_csv().encode(),
-                        filename="pts.csv",
-                        label="pts.csv",
-                    ),
-                    mo.download(
-                        data=pts_fr.write_csv().encode(),
-                        filename="pts_fr.csv",
-                        label="pts_fr.csv",
-                    ),
-                    mo.download(
-                        data=attendance_long.write_csv().encode(),
-                        filename="attendance_long.csv",
-                        label="attendance_long.csv",
-                    ),
-                    mo.download(
-                        data=attendance_fr_long.write_csv().encode(),
-                        filename="attendance_fr_long.csv",
-                        label="attendance_fr_long.csv",
-                    ),
-                    mo.download(
-                        data=cchamps_long.write_csv().encode(),
-                        filename="cchamps.csv",
-                        label="cchamps.csv",
-                    ),
-                ],
+            mo.md(
+                f"Saved `pts.csv`, `pts_fr.csv`, `attendance_long.csv`, "
+                f"`attendance_fr_long.csv`, `cchamps.csv` to `{data}`"
             ),
         ],
     )

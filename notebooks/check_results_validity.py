@@ -51,6 +51,12 @@ def _(members):
 
 
 @app.cell
+def _(results_df):
+    results_df
+    return
+
+
+@app.cell
 def _(members_file, results_file):
     mo.stop(
         not results_file.value or not members_file.value,
@@ -71,15 +77,10 @@ def _(members_file, results_file):
     lines.append("=== Member existence ===")
     bad_existence = results_df.with_columns(
         pl.col("title").is_in(titles).alias("title_ok"),
-        pl.col("member_id").is_in(member_ids).alias("id_ok"),
-        (
-            pl.col("title").str.split(" - ").list.get(-1)
-            == pl.col("member_id")
-        ).alias("id_eq"),
-    ).filter(~(pl.col("title_ok") & pl.col("id_ok") & pl.col("id_eq")))
+    ).filter(~(pl.col("title_ok")))
     lines.extend(
         f"  FAIL {row['date']} / {row['event']} / {row['gender']}: "
-        f"{row['title']!r} id={row['member_id']!r}"
+        f"{row['title']!r}"
         for row in bad_existence.iter_rows(named=True)
     )
     if bad_existence.height == 0:
@@ -106,13 +107,13 @@ def _(members_file, results_file):
     # Check duplicates
     lines.append("\n=== Duplicates ===")
     dupl = (
-        results_df.group_by(["date", "event", "gender", "member_id"])
+        results_df.group_by(["date", "event", "gender", "title"])
         .agg(pl.len().alias("count"))
         .filter(pl.col("count") > 1)
     )
     lines.extend(
         f"  FAIL {row['date']} / {row['event']} / {row['gender']}: "
-        f"id={row['member_id']!r} appears {row['count']}x"
+        f"id={row['title']!r} appears {row['count']}x"
         for row in dupl.iter_rows(named=True)
     )
     if dupl.height == 0:
@@ -126,7 +127,7 @@ def _(members_file, results_file):
         lines.insert(0, "All checks passed.\n")
 
     mo.plain_text("\n".join(lines))
-    return members, members_df
+    return members, members_df, results_df
 
 
 @app.cell

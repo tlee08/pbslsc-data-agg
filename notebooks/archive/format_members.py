@@ -42,16 +42,6 @@ def _():
 
 @app.cell
 def _(members_file):
-    my_df = pl.read_csv(
-        io.BytesIO(members_file.value[0].contents),
-        infer_schema=False,
-    )
-    my_df
-    return
-
-
-@app.cell
-def _(members_file):
     mo.stop(
         not members_file.value,
         mo.callout(mo.md("Upload a members CSV to continue."), kind="warn"),
