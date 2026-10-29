@@ -8,18 +8,18 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, TypeAdapter
+from pydantic import BaseModel, ConfigDict, TypeAdapter
 
 
 class Member(BaseModel):
     """A club member."""
 
+    model_config = ConfigDict(extra="ignore")
+
     name: str
     gender: Literal["m", "f"]
     membership: str
     id: str
-    first_name: str
-    last_name: str
     title: str
 
 

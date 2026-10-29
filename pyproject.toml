@@ -11,11 +11,14 @@ dependencies = [
     "polars>=1.38.1",
     "pydantic>=2.0.0",
     "seaborn>=0.13.2",
-    "watchdog>=6.0.0",
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.15.2"]
+dev = [
+    "ruff>=0.15.2",
+    "ty>=0.0.94",
+    "watchdog>=6.0.0",
+]
 
 [build-system]
 requires = ["uv_build>=0.12.13,<0.13.0"]
