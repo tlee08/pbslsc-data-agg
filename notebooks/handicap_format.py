@@ -55,7 +55,7 @@ def _(handicaps, pl):
     docx_bytes = build_handicap_docx(handicaps)
 
     rows = [
-        {"event": e, "gender": g, **record}
+        {"event": e, "gender": g, "title": record.title, "handicap": record.handicap}
         for e in handicaps
         for g in handicaps[e]
         for record in handicaps[e][g]

@@ -50,8 +50,7 @@ def _(members_file, results_file):
 
     results_df = results_to_frame(results)
     members_df = members_to_frame(members)
-    titles = members_df["title"].to_list()
-    member_ids = members_df["id"].to_list()
+    titles = members_df.get_column("title").to_list()
 
     lines = []
 
@@ -61,8 +60,7 @@ def _(members_file, results_file):
         pl.col("title").is_in(titles).alias("title_ok"),
     ).filter(~(pl.col("title_ok")))
     lines.extend(
-        f"  FAIL {row['date']} / {row['event']} / {row['gender']}: "
-        f"{row['title']!r}"
+        f"  FAIL {row['date']} / {row['event']} / {row['gender']}: {row['title']!r}"
         for row in bad_existence.iter_rows(named=True)
     )
     if bad_existence.height == 0:
@@ -101,11 +99,7 @@ def _(members_file, results_file):
     if dupl.height == 0:
         lines.append("  All OK")
 
-    if (
-        bad_existence.height == 0
-        and bad_gender.height == 0
-        and dupl.height == 0
-    ):
+    if bad_existence.height == 0 and bad_gender.height == 0 and dupl.height == 0:
         lines.insert(0, "All checks passed.\n")
 
     mo.plain_text("\n".join(lines))

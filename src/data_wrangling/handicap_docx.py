@@ -1,4 +1,4 @@
-"""Build a printable .docx from a handicaps JSON dict.
+"""Build a printable .docx from a handicaps dict.
 
 Matches the layout of ``handicaps_261025.docx``: one bordered table per
 event+gender, each starting on a new page, with columns "Name - Member
@@ -8,12 +8,16 @@ number" and "Handicap". Handicaps are sorted descending within each table.
 from __future__ import annotations
 
 import io
+from typing import TYPE_CHECKING
 
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Inches, Mm
+
+if TYPE_CHECKING:
+    from .models import Handicaps
 
 EVENTS = ["swim", "board", "ski", "run", "flags"]
 GENDERS = ["m", "f"]
@@ -58,16 +62,12 @@ def _write(
         _shade(cell, fill)
 
 
-def _record_label(record: dict) -> str:
-    return record.get("title", "")
-
-
-def _fmt(handicap) -> str:
-    """Format a handicap as a whole number where possible (7 -> '7', 6.5 -> '6.5')."""
+def _fmt(handicap: float) -> str:
+    """Format a handicap as a whole number where possible (7.0 -> '7', 6.5 -> '6.5')."""
     return f"{handicap:g}"
 
 
-def build_handicap_docx(handicaps: dict) -> bytes:
+def build_handicap_docx(handicaps: Handicaps) -> bytes:
     """Return a .docx (bytes) with one table per event+gender, each on a page."""
     doc = Document()
     section = doc.sections[0]
@@ -80,7 +80,7 @@ def build_handicap_docx(handicaps: dict) -> bytes:
             rows = handicaps.get(event, {}).get(gender, [])
             if not rows:
                 continue
-            rows = sorted(rows, key=lambda r: r.get("handicap_rounded", 0), reverse=True)
+            rows = sorted(rows, key=lambda r: r.handicap, reverse=True)
 
             if not first:
                 doc.add_page_break()
@@ -91,7 +91,12 @@ def build_handicap_docx(handicaps: dict) -> bytes:
             table.autofit = False
 
             title_cells = table.add_row().cells
-            _write(title_cells[0].merge(title_cells[1]), _title(event, gender), bold=True, fill="F2F2F2")
+            _write(
+                title_cells[0].merge(title_cells[1]),
+                _title(event, gender),
+                bold=True,
+                fill="F2F2F2",
+            )
 
             header = table.add_row().cells
             _write(header[0], "Name - Member number", bold=True, fill="DDEBF7")
@@ -99,8 +104,8 @@ def build_handicap_docx(handicaps: dict) -> bytes:
 
             for record in rows:
                 cells = table.add_row().cells
-                _write(cells[0], _record_label(record))
-                _write(cells[1], _fmt(record.get("handicap_rounded", 0)), bold=True, right=True)
+                _write(cells[0], record.title)
+                _write(cells[1], _fmt(record.handicap), bold=True, right=True)
 
             table.columns[0].width = Inches(6500 / 1440)
             table.columns[1].width = Inches(2147 / 1440)
