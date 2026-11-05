@@ -16,11 +16,11 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Inches, Mm
 
+from data_wrangling.constants import WHC_EVENTS, WHC_GENDERS
+
 if TYPE_CHECKING:
     from .models import Handicaps
 
-EVENTS = ["swim", "board", "ski", "run", "flags"]
-GENDERS = ["m", "f"]
 
 _EVENT_TITLE = {
     "swim": "Swim",
@@ -75,8 +75,8 @@ def build_handicap_docx(handicaps: Handicaps) -> bytes:
     section.page_height = Mm(297)
 
     first = True
-    for event in EVENTS:
-        for gender in GENDERS:
+    for event in WHC_EVENTS:
+        for gender in WHC_GENDERS:
             rows = handicaps.get(event, {}).get(gender, [])
             if not rows:
                 continue

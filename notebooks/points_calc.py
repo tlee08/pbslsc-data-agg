@@ -19,7 +19,12 @@ with app.setup:
     import polars as pl
 
     from data_wrangling.frames import members_to_frame, results_to_frame
-    from data_wrangling.models import Lookups, members_adapter, results_adapter
+    from data_wrangling.models import (
+        Lookups,
+        PointsConfig,
+        members_adapter,
+        results_adapter,
+    )
 
     tally_cols = [
         "all_attendance",
@@ -34,21 +39,31 @@ with app.setup:
 
 @app.cell
 def _():
-    mo.md("""# Calculate Points""")
+    mo.md("""
+    # Calculate Points
+    """)
     return
 
 
 @app.cell
 def _():
-    data = Path.cwd().parent / "data" / "2026_27"
-    return (data,)
+    lookups_file = mo.ui.file(label="Upload lookups.json", filetypes=[".json"])
+    members_file = mo.ui.file(label="Upload members.json", filetypes=[".json"])
+    results_file = mo.ui.file(label="Upload results.json", filetypes=[".json"])
+    return lookups_file, members_file, results_file
 
 
 @app.cell
-def _(data):
-    members = members_adapter.validate_json((data / "members.json").read_text())
-    results = results_adapter.validate_json((data / "results.json").read_text())
-    lookups = Lookups.model_validate_json((data / "lookups.json").read_text())
+def _(lookups_file, members_file, results_file):
+    mo.vstack([lookups_file, members_file, results_file])
+    return
+
+
+@app.cell
+def _(lookups_file, members_file, results_file):
+    lookups = Lookups.model_validate_json(lookups_file.value[0].contents)
+    members = members_adapter.validate_json(members_file.value[0].contents)
+    results = results_adapter.validate_json(results_file.value[0].contents)
 
     members_df = members_to_frame(members)
     results_df = results_to_frame(results)
@@ -58,29 +73,37 @@ def _(data):
 @app.cell
 def _(lookups, members_df, results_df):
     # ── Points config — edit values here ────────────────────────────────
-    whc_first = 11  # points for 1st place, −1 per place (min 1)
-    attendance = {"normal": 1, "marathon": 5}  # attendance points per event kind
-    jcc_points = {"jcc_individual": 25, "jcc_team": 5}
-    curlewis_dates = ["260927_whc", "261004_whc"]
-    # TODO: freshers/bbb — members.json will soon carry membership="Fresher";
-    # bbb attendance (5 pts) still needs an external file, not wired yet.
+    config = PointsConfig.model_validate(
+        {
+            "whc_first": 11,  # points for 1st place, −1 per place (min 1)
+            "attendance": {"normal": 1, "marathon": 5},  # pts per event kind
+            "jcc_points": {"jcc_individual": 25, "jcc_team": 5},
+            "curlewis_dates": ["260927_whc", "261004_whc"],
+            # TODO: freshers/bbb — members.json will soon carry
+            # membership="Fresher"; bbb attendance (5 pts) still needs an
+            # external file, not wired yet.
+        }
+    )
 
     # Event categories (single source of truth: lookups.json)
-    s = lookups["series"]
-    whc_events = s["whc"]["events"]
-    cchamps_events = s["cchamps"]["events"]
+    s = lookups.series
+    whc_events = s["whc"].events
+    cchamps_events = s["cchamps"].events
     marathon_events = [
-        e for k in ("mswim", "mboard", "mski", "mrun") for e in s[k]["events"]
+        e for k in ("mswim", "mboard", "mski", "mrun") for e in s[k].events
     ]
-    jcc_events = s["jcc"]["events"]
-    imdl_events = s["imdl"]["events"]
+    jcc_events = s["jcc"].events
+    imdl_events = s["imdl"].events
     swim_not_required = [*marathon_events, *cchamps_events, *imdl_events]
     xmas_dates = [d for d in results_df["date"].unique() if "_xmas" in d]
 
     attendance_map = dict.fromkeys(
         [*marathon_events, *imdl_events],
-        attendance["marathon"],
-    ) | dict.fromkeys([*whc_events, *cchamps_events], attendance["normal"])
+        config.attendance["marathon"],
+    ) | dict.fromkeys(
+        [*whc_events, *cchamps_events],
+        config.attendance["normal"],
+    )
 
     fr_df = members_df.filter(pl.col("membership") == "Fresher")
 
@@ -91,7 +114,7 @@ def _(lookups, members_df, results_df):
             .replace_strict(attendance_map, default=0)
             .alias("dbhunter_val"),
             pl.when(pl.col("place") > 0)
-            .then((whc_first - pl.col("place")).clip(lower_bound=1))
+            .then((config.whc_first - pl.col("place")).clip(lower_bound=1))
             .otherwise(0)
             .alias("whc_val"),
         )
@@ -119,7 +142,9 @@ def _(lookups, members_df, results_df):
         _tally(eligible & pl.col("event").is_in(marathon_events)).alias(
             "presidents_pts",
         ),
-        _tally(eligible & pl.col("date").is_in(curlewis_dates)).alias("curlewis_pts"),
+        _tally(eligible & pl.col("date").is_in(config.curlewis_dates)).alias(
+            "curlewis_pts",
+        ),
     )
 
     cchamps = (
@@ -127,7 +152,13 @@ def _(lookups, members_df, results_df):
             pl.col("event").is_in(cchamps_events) & (pl.col("place") > 0),
         )
         .group_by("title", "event")
-        .agg(pl.col("whc_val").sort(descending=True).head(2).sum().alias("cchamps_pts"))
+        .agg(
+            pl.col("whc_val")
+            .sort(descending=True)
+            .head(2)
+            .sum()
+            .alias("cchamps_pts")
+        )
         .group_by("title")
         .agg(pl.col("cchamps_pts").sum().alias("cchamps"))
     )
@@ -143,7 +174,9 @@ def _(lookups, members_df, results_df):
     jcc_pts = (
         results_enriched.filter(pl.col("event").is_in(jcc_events))
         .with_columns(
-            pl.col("event").replace_strict(jcc_points, default=0).alias("jcc_val"),
+            pl.col("event")
+            .replace_strict(config.jcc_points, default=0)
+            .alias("jcc_val"),
         )
         .group_by("title")
         .agg(pl.col("jcc_val").sum().alias("fr_jcc_pts"))
@@ -154,7 +187,9 @@ def _(lookups, members_df, results_df):
         .join(jcc_pts, on="title", how="left")
         .with_columns(
             pl.col("fr_jcc_pts").fill_null(0),
-            (pl.col("dbhunter_pts") + pl.col("fr_jcc_pts")).alias("fr_whc_pts"),
+            (pl.col("dbhunter_pts") + pl.col("fr_jcc_pts")).alias(
+                "fr_whc_pts"
+            ),
         )
     )
 
@@ -176,41 +211,48 @@ def _(lookups, members_df, results_df):
         .select("title", "date", "event", pl.col("whc_val").alias("points"))
         .sort("title", "date", "event")
     )
-
-    return attendance_fr_long, attendance_long, cchamps_long, fr_df, pts, pts_fr
+    return attendance_fr_long, attendance_long, cchamps_long, pts, pts_fr
 
 
 @app.cell
 def _(members_df, results_df):
     unknown = sorted(
-        set(results_df["title"].to_list()) - set(members_df["title"].to_list()),
+        set(results_df["title"].to_list())
+        - set(members_df["title"].to_list()),
     )
-    mo.md(f"⚠️ Results entries with no matching member (dropped): {unknown or 'none'}")
+    mo.plain_text(
+        f"⚠️ Results entries with no matching member (dropped): {unknown or 'none'}"
+    )
     return
 
 
 @app.cell
-def _(attendance_fr_long, attendance_long, cchamps_long, data, pts, pts_fr):
+def _(attendance_fr_long, attendance_long, cchamps_long, pts, pts_fr):
     pts_nonzero = pts.filter(pl.sum_horizontal(pl.col(tally_cols)) > 0)
 
-    for name, df in [
-        ("pts.csv", pts),
-        ("pts_fr.csv", pts_fr),
-        ("attendance_long.csv", attendance_long),
-        ("attendance_fr_long.csv", attendance_fr_long),
-        ("cchamps.csv", cchamps_long),
-    ]:
-        df.write_csv(data / name)
+    df_exports_dict = {
+        "pts.csv": pts,
+        "pts_fr.csv": pts_fr,
+        "attendance_long.csv": attendance_long,
+        "attendance_fr_long.csv": attendance_fr_long,
+        "cchamps.csv": cchamps_long,
+    }
 
     mo.vstack(
         [
-            mo.md("### All members (with points)"),
-            pts_nonzero,
-            mo.md("### Freshers"),
-            pts_fr,
-            mo.md(
-                f"Saved `pts.csv`, `pts_fr.csv`, `attendance_long.csv`, "
-                f"`attendance_fr_long.csv`, `cchamps.csv` to `{data}`",
+            mo.hstack(
+                [
+                    mo.download(
+                        data=_df.write_csv(),
+                        filename=_fp,
+                        label=f"Download {_fp}",
+                    )
+                    for _fp, _df in df_exports_dict.items()
+                ]
+            ),
+            mo.accordion(
+                df_exports_dict,
+                multiple=True,
             ),
         ],
     )

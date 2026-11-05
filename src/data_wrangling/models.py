@@ -77,6 +77,28 @@ class HandicapEntry(BaseModel):
     handicap: float
 
 
+class PointsConfig(BaseModel):
+    """Configuration for the points calculation."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    whc_first: int
+    attendance: dict[str, int]
+    jcc_points: dict[str, int]
+    curlewis_dates: list[str]
+
+
+class HandicapConfig(BaseModel):
+    """Handicap update configuration."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    middle_ratio: float
+    step: dict[str, float]
+    max_change: dict[str, float]
+    round_to: dict[str, float]
+
+
 Meetings = list[MeetingId]
 meetings_adapter = TypeAdapter(Meetings)
 

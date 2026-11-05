@@ -6,20 +6,28 @@
 # ]
 # ///
 
+
 import marimo
 
 __generated_with = "0.24.2"
 app = marimo.App(width="full")
 
 with app.setup:
+    import math
+
     import marimo as mo
     import polars as pl
 
-    from data_wrangling.handicaps import (
+    from data_wrangling.constants import WHC_EVENTS, WHC_GENDERS
+    from data_wrangling.frames import handicaps_to_frame
+    from data_wrangling.models import (
         HandicapConfig,
-        update_handicaps,
+        HandicapEntry,
+        Handicaps,
+        Results,
+        handicaps_adapter,
+        results_adapter,
     )
-    from data_wrangling.models import handicaps_adapter, results_adapter
 
 
 @app.cell
@@ -27,7 +35,7 @@ def _():
     # ── Handicap config — edit these values ─────────────────────────────
     # Handicap = start delay in seconds (metres for flags). Bigger = later start.
     config = {
-        "middle_ratio": 0.5,  # zero-change point as a fraction of the field (0.5 = middle)
+        "middle_ratio": 0.5,  # zero-change point as fraction of field (0.5 = middle)
         "step": {
             "swim": 3,
             "board": 3,
@@ -64,6 +72,56 @@ def _():
     3. Review the changes and download the new handicaps JSON.
     """)
     return
+
+
+@app.function
+def update_handicaps(
+    old: Handicaps,
+    meeting_results: Results,
+    config: HandicapConfig,
+) -> Handicaps:
+    """Return updated handicaps as ``{event: {gender: [HandicapEntry]}}``.
+
+    Handicap = start delay (seconds, metres for flags); bigger = later start.
+    Per discipline+gender pool: ``change = step * (middle - place)`` where
+    ``middle = 1 + ratio * (field - 1)``, capped at ``max_change``, floored at
+    0 and rounded up to ``round_to``. Non-racers carry forward. Records are
+    keyed by their ``title``.
+
+    ``config``: ``step``, ``max_change``, ``round_to`` (per-event) and
+    ``middle_ratio`` (float).
+    """
+    new: Handicaps = {}
+    for event in WHC_EVENTS:
+        new[event] = {}
+        for gender in WHC_GENDERS:
+            pool = {r.title: r for r in old.get(event, {}).get(gender, [])}
+            entries = meeting_results.get(event, {}).get(gender, [])
+            middle = 1 + config.middle_ratio * (len(entries) - 1)
+            updated: dict[str, HandicapEntry] = {}
+            for place, title in enumerate(entries, 1):
+                record = pool.get(
+                    title,
+                    HandicapEntry(title=title, handicap=0.0),
+                )
+                change = config.step[event] * (middle - place)
+                change = max(
+                    -config.max_change[event],
+                    min(config.max_change[event], change),
+                )
+                handicap = max(0.0, record.handicap + change)
+                updated[title] = HandicapEntry(
+                    title=title,
+                    handicap=math.ceil(handicap / config.round_to[event])
+                    * config.round_to[event],
+                )
+            for title, record in pool.items():
+                if title not in updated:
+                    updated[title] = record
+            kept = [r for r in updated.values() if r.handicap > 0]
+            kept.sort(key=lambda r: r.handicap, reverse=True)
+            new[event][gender] = kept
+    return new
 
 
 @app.cell
@@ -159,19 +217,11 @@ def _(meeting, new_hcaps, old_hcaps):
         for records in genders.values()
         for r in records
     }
-    rows = [
-        {
-            "event": event,
-            "gender": gender,
-            "title": r.title,
-            "previous": prev.get(r.title, 0.0),
-            "handicap": r.handicap,
-        }
-        for event, genders in new_hcaps.items()
-        for gender, records in genders.items()
-        for r in records
-    ]
-    new_hcaps_df = pl.DataFrame(rows).with_columns(
+
+    new_hcaps_df = handicaps_to_frame(new_hcaps)
+    new_hcaps_df = new_hcaps_df.with_columns(
+        pl.col("title").map_elements(lambda _x: prev.get(_x, 0.0)).alias("previous"),
+    ).with_columns(
         (pl.col("handicap") - pl.col("previous")).alias("change"),
     )
     changed = new_hcaps_df.filter(pl.col("change") != 0).sort(
@@ -200,9 +250,10 @@ def _(meeting, new_hcaps, old_hcaps):
                         ["event", "gender", "handicap"],
                         descending=[False, False, True],
                     ),
+                    "Changed": changed,
                 },
+                multiple=True,
             ),
-            mo.accordion({"Changed": changed}),
         ],
     )
     return

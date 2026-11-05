@@ -41,3 +41,23 @@ def results_to_frame(results: dict) -> pl.DataFrame:
         for place, entry in enumerate(entries, 1)
     ]
     return pl.DataFrame(records, schema_overrides={"place": pl.Int64})
+
+
+def handicaps_to_frame(handicaps: dict) -> pl.DataFrame:
+    """Flatten validated handicaps into a long frame.
+
+    ``handicaps`` is ``{event: {gender: [HandicapEntry, ...]}}``. Returns one row
+    per entry with columns: ``event``, ``gender``, ``title``, ``handicap``.
+    """
+    records = [
+        {
+            "event": e,
+            "gender": g,
+            "title": record.title,
+            "handicap": record.handicap,
+        }
+        for e in handicaps
+        for g in handicaps[e]
+        for record in handicaps[e][g]
+    ]
+    return pl.DataFrame(records)
