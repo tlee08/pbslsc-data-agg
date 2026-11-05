@@ -17,7 +17,7 @@ with app.setup:
     import polars as pl
 
     from data_wrangling.frames import members_to_frame, results_to_frame
-    from data_wrangling.models import Members, Results
+    from data_wrangling.models import members_adapter, results_adapter
 
 
 @app.cell
@@ -39,32 +39,14 @@ def _():
 
 
 @app.cell
-def _(members_df):
-    members_df
-    return
-
-
-@app.cell
-def _(members):
-    members_to_frame(members)
-    return
-
-
-@app.cell
-def _(results_df):
-    results_df
-    return
-
-
-@app.cell
 def _(members_file, results_file):
     mo.stop(
         not results_file.value or not members_file.value,
         mo.callout(mo.md("Upload both files to continue."), kind="warn"),
     )
 
-    results = Results.validate_json(results_file.value[0].contents)
-    members = Members.validate_json(members_file.value[0].contents)
+    results = results_adapter.validate_json(results_file.value[0].contents)
+    members = members_adapter.validate_json(members_file.value[0].contents)
 
     results_df = results_to_frame(results)
     members_df = members_to_frame(members)
@@ -127,7 +109,7 @@ def _(members_file, results_file):
         lines.insert(0, "All checks passed.\n")
 
     mo.plain_text("\n".join(lines))
-    return members, members_df, results_df
+    return
 
 
 @app.cell

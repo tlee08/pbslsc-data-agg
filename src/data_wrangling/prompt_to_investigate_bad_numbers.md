@@ -1,0 +1,5 @@
+Please look at my google drive pbslsc_whc_2026_27/results_formatted folder. It is here /Users/timlee/Library/CloudStorage/GoogleDrive-timothyeelim.lee@gmail.com/My Drive/pbslsc/pbslsc_whc_2026_27/results_formatted
+
+Your task is to read results.json and determine possible members from members.json for the entries which don't match a member.
+Non-member entries are as "{letter or two}{3 numbers}".
+Likely members will a) have already competed in other events on the day but will not have competed in this particular event, or failing that b) other members in the members list who have not participated in this particular event. Similarity can be thought of as levenstein distance for member number and also as per-case examples of letters/numbers that sound or look similar (N vs M, L vs I, 5 vs 9, 9 vs 4, etc.)
